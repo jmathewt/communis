@@ -1,0 +1,8 @@
+package com.rhema.communis.security.model;
+
+public class AuthConstants {
+
+    public static final String SECRET = "8f9e-2a86e4085a59";
+    public static final String HEADER = "X-Auth-Token";
+    public static final long TOKEN_EXPIRATION = 3000;
+}
