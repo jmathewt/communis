@@ -5,8 +5,6 @@ import com.rhema.communis.security.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mobile.device.Device;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -103,27 +101,15 @@ public class TokenUtils {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 
-    private String generateAudience(Device device) {
-        String audience = this.AUDIENCE_UNKNOWN;
-        if (device.isNormal()) {
-            audience = this.AUDIENCE_WEB;
-        } else if (device.isTablet()) {
-            audience = AUDIENCE_TABLET;
-        } else if (device.isMobile()) {
-            audience = AUDIENCE_MOBILE;
-        }
-        return audience;
-    }
-
     private Boolean ignoreTokenExpiration(String token) {
         String audience = this.getAudienceFromToken(token);
         return (this.AUDIENCE_TABLET.equals(audience) || this.AUDIENCE_MOBILE.equals(audience));
     }
 
-    public String generateToken(UserDetails userDetails, Device device) {
+    public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<String, Object>();
         claims.put("sub", userDetails.getUsername());
-        claims.put("audience", this.generateAudience(device));
+        claims.put("audience", this.AUDIENCE_UNKNOWN);
         claims.put("created", this.generateCurrentDate());
         return this.generateToken(claims);
     }

@@ -50,11 +50,6 @@
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.mobile</groupId>
-                <artifactId>spring-mobile-device</artifactId>
-                <version>${spring-mobile-device}</version>
-            </dependency>
             <!--JAXB -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>

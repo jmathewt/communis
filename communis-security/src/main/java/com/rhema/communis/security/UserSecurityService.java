@@ -13,9 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserSecurityService implements UserDetailsService {
@@ -32,7 +30,7 @@ public class UserSecurityService implements UserDetailsService {
     public void createAdminTestAccounts(){
         User user = this.usersRepository.findByUsername("admin");
         if(user == null){
-            Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+            List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ADMIN"));
             User admin = new User("admin", passwordEncoder.encode("A@12word"), authorities);
             this.usersRepository.save(admin);

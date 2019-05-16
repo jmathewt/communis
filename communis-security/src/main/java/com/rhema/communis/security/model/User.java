@@ -8,10 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Document
 public class User extends BaseEntity implements UserDetails {
@@ -25,9 +22,9 @@ public class User extends BaseEntity implements UserDetails {
     private boolean credentialsNonExpired = true;
     private Date lastPasswordReset;
     private Date lastLoggedIn;
-    private Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
+    private Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-    public User(String username, String password, Set<SimpleGrantedAuthority> authorities) {
+    public User(String username, String password, List<SimpleGrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
