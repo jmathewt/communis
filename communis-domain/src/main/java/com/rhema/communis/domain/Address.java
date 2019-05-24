@@ -1,8 +1,13 @@
 package com.rhema.communis.domain;
 
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
+@CompoundIndexes({
+        @CompoundIndex(name = "address_idx", def = "{'street' : 1, 'street2': 1, 'city': 1, 'state': 1, 'country': 1}", unique = true)
+})
 public class Address extends BaseEntity {
     private String street;
     private String street2;
