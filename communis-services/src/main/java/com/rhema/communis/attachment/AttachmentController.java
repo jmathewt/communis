@@ -28,7 +28,7 @@ public class AttachmentController {
         try {
 
             metadata.put("uploadedBy", principal.getName());
-            String id = this.fileUploadTemplate.upload(file.getInputStream(), file.getName(), file.getContentType(), "public", metadata);
+            String id = this.fileUploadTemplate.upload(file.getInputStream(), file.getOriginalFilename(), file.getContentType(), "public", metadata);
             metadata.put("id", id);
             return metadata;
         } catch (IOException e) {
