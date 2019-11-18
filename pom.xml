@@ -22,6 +22,7 @@
         <module>communis-security</module>
         <module>communis-domain</module>
         <module>communis-peripherals</module>
+        <module>communis-mission</module>
     </modules>
 
     <properties>
@@ -39,7 +40,17 @@
             </dependency>
             <dependency>
                 <groupId>com.rhema.communis</groupId>
+                <artifactId>communis-mission</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rhema.communis</groupId>
                 <artifactId>communis-repository</artifactId>
+                <version>${version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rhema.communis</groupId>
+                <artifactId>communis-peripherals</artifactId>
                 <version>${version}</version>
             </dependency>
             <dependency>
@@ -52,6 +63,14 @@
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
             </dependency>
+
+            <!--Country Codes-->
+            <dependency>
+                <groupId>com.neovisionaries</groupId>
+                <artifactId>nv-i18n</artifactId>
+                <version>1.27</version>
+            </dependency>
+
             <!--JAXB -->
             <dependency>
                 <groupId>javax.xml.bind</groupId>

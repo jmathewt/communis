@@ -1,6 +1,6 @@
 package com.rhema.communis.domain;
 
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.*;
 
 import java.util.Date;
 
@@ -8,10 +8,14 @@ public class BaseEntity {
 
     @Id
     private String id;
+    @CreatedBy
     private String createdBy;
-    private Date createdDate = new Date();
+    @CreatedDate
+    private Date createdDate;
+    @LastModifiedBy
     private String lastModifiedBy;
-    private Date lastModifiedDate = new Date();
+    @LastModifiedDate
+    private Date lastModifiedDate;
 
     public String getId() {
         return id;

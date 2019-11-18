@@ -1,5 +1,6 @@
 package com.rhema.communis.domain;
 
+import com.neovisionaries.i18n.CountryCode;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,7 +14,7 @@ public class Address extends BaseEntity {
     private String street2;
     private String city;
     private String state;
-    private String country;
+    private CountryCode country;
     private boolean primary;
 
     public String getStreet() {
@@ -48,11 +49,11 @@ public class Address extends BaseEntity {
         this.state = state;
     }
 
-    public String getCountry() {
+    public CountryCode getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(CountryCode country) {
         this.country = country;
     }
 
