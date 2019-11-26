@@ -1,7 +1,7 @@
 package com.rhema.communis.security;
 
 import com.rhema.communis.security.model.AuthConstants;
-import com.rhema.communis.security.model.User;
+import com.rhema.communis.security.model.Identity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -140,7 +140,7 @@ public class TokenUtils {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        User user = (User) userDetails;
+        Identity user = (Identity) userDetails;
         final String username = this.getUsernameFromToken(token);
         final Date created = this.getCreatedDateFromToken(token);
         final Date expiration = this.getExpirationDateFromToken(token);

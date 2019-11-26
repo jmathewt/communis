@@ -1,17 +1,19 @@
 package com.rhema.communis.security.model;
 
 import com.rhema.communis.domain.BaseEntity;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Document
-public class User extends BaseEntity implements UserDetails {
+public class Identity extends BaseEntity implements UserDetails {
 
     @Indexed(unique = true)
     private String username;
@@ -24,7 +26,7 @@ public class User extends BaseEntity implements UserDetails {
     private Date lastLoggedIn;
     private Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-    public User(String username, String password, List<SimpleGrantedAuthority> authorities) {
+    public Identity(String username, String password, List<SimpleGrantedAuthority> authorities) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
