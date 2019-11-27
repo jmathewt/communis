@@ -20,5 +20,14 @@
             <groupId>com.neovisionaries</groupId>
             <artifactId>nv-i18n</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rhema.communis</groupId>
+            <artifactId>communis-peripherals</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

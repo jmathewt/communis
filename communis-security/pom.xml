@@ -37,6 +37,10 @@
             <artifactId>communis-repository</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.rhema.communis</groupId>
+            <artifactId>communis-peripherals</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
         </dependency>

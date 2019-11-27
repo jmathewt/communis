@@ -2,6 +2,7 @@ package com.rhema.communis.security;
 
 import com.rhema.communis.security.model.AuthenticationRequest;
 import com.rhema.communis.security.model.AuthenticationResponse;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Api(tags = "Authentication")
 public class AuthenticationController {
 
     @Autowired

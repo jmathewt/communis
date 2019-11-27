@@ -49,6 +49,11 @@
             <artifactId>communis-peripherals</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.rhema.communis</groupId>
+            <artifactId>communis-mission</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -1,6 +1,7 @@
 package com.rhema.communis.attachment;
 
 import com.rhema.communis.repository.FileUploadTemplate;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.HttpEntity;
@@ -14,8 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/attachment")
-public class AttachmentController {
+@RequestMapping("/api/core/document")
+@Api(tags = "Core Apis")
+public class DocumentController {
 
     @Autowired
     FileUploadTemplate fileUploadTemplate;
@@ -38,7 +40,7 @@ public class AttachmentController {
     }
 
     @GetMapping("/file/{id}")
-    public HttpEntity<byte[]> getUploadedFile(@PathVariable String id) {
+    public HttpEntity<byte[]> findOne(@PathVariable String id) {
 
         GridFsResource file = this.fileUploadTemplate.findOne(id);
         HttpHeaders headers = new HttpHeaders();

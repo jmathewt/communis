@@ -1,14 +1,13 @@
-package com.rhema.communis.member;
+package com.rhema.communis.mission.region;
 
 import com.rhema.communis.common.AbstractController;
-import com.rhema.communis.domain.Address;
+import com.rhema.communis.mission.domain.Region;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/core/address")
-@Api(tags = "Core Apis")
-public class AddressController extends AbstractController<Address, String> {
-
+@RequestMapping("/api/mission/region")
+@Api(tags = "Mission")
+public class RegionController extends AbstractController<Region, String> {
 }
