@@ -18,6 +18,10 @@
         </dependency>
         <dependency>
             <groupId>com.rhema.communis</groupId>
+            <artifactId>communis-peripherals</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rhema.communis</groupId>
             <artifactId>communis-repository</artifactId>
         </dependency>
     </dependencies>

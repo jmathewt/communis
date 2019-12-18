@@ -1,4 +1,4 @@
-package com.rhema.communis.security.model;
+package com.rhema.communis;
 
 public class AuthConstants {
 

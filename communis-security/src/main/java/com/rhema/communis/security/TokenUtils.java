@@ -1,6 +1,6 @@
 package com.rhema.communis.security;
 
-import com.rhema.communis.security.model.AuthConstants;
+import com.rhema.communis.AuthConstants;
 import com.rhema.communis.security.model.Identity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
