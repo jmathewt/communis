@@ -28,11 +28,11 @@ public class UserSecurityService implements UserDetailsService {
 
     @PostConstruct
     public void createAdminTestAccounts(){
-        Identity user = this.usersRepository.findByUsername("admin");
+        Identity user = this.usersRepository.findByUsername("admin@communis.com");
         if(user == null){
             List<SimpleGrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ADMIN"));
-            Identity admin = new Identity("admin", passwordEncoder.encode("A@12word"), authorities);
+            Identity admin = new Identity("admin@communis.com", passwordEncoder.encode("A@12word"), authorities);
             this.usersRepository.save(admin);
             logger.info("Created admin user with user ID [admin]");
         }

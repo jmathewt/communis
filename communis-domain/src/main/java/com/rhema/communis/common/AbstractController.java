@@ -1,12 +1,15 @@
 package com.rhema.communis.common;
 
 import com.rhema.communis.domain.BaseEntity;
-import com.rhema.communis.domain.CommunisResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Date;
@@ -19,13 +22,14 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommunisResponse findOne(@PathVariable ID id) {
+    public CommunisResponse findOne(@PathVariable @NotEmpty ID id) {
         this.logger.debug("Request to Find for id : " + id);
         try {
             return new CommunisResponse(this.service.find(id));
+        } catch (ResponseStatusException r) {
+            return new CommunisResponse(new CommunisError(r.getStatus(), r.getMessage()));
         } catch (Exception e) {
-            this.logger.error("Exception retrieving Object ", e);
-            return new CommunisResponse(e.getMessage());
+            return new CommunisResponse(new CommunisError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
         }
     }
 
@@ -35,27 +39,29 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
         this.logger.debug("Request to Find ALL");
         try {
             return new CommunisResponse(this.service.findAll());
+        } catch (ResponseStatusException r) {
+            return new CommunisResponse(new CommunisError(r.getStatus(), r.getMessage()));
         } catch (Exception e) {
-            this.logger.error("Exception retrieving ALL Objects ", e);
-            return new CommunisResponse(e.getMessage());
+            return new CommunisResponse(new CommunisError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
         }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public CommunisResponse deleteByID(@PathVariable ID id) {
+    public CommunisResponse deleteByID(@PathVariable @NotEmpty ID id) {
         this.logger.debug("Request to DELETE for id : " + id);
         try {
             return new CommunisResponse(this.service.deleteByID(id));
+        } catch (ResponseStatusException r) {
+            return new CommunisResponse(new CommunisError(r.getStatus(), r.getMessage()));
         } catch (Exception e) {
-            this.logger.error("Exception deleting Object ", e);
-            return new CommunisResponse(e.getMessage());
+            return new CommunisResponse(new CommunisError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
         }
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public CommunisResponse create(@RequestBody T t, Principal principal) {
+    public CommunisResponse create(@RequestBody @Valid T t, Principal principal) {
         this.logger.debug("Request to CREATE object : " + t);
         try {
             t.setCreatedBy(principal.getName());
@@ -63,23 +69,25 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
             t.setLastModifiedBy(principal.getName());
             t.setLastModifiedDate(new Date());
             return new CommunisResponse(this.service.saveOrUpdate(t));
+        } catch (ResponseStatusException r) {
+            return new CommunisResponse(new CommunisError(r.getStatus(), r.getMessage()));
         } catch (Exception e) {
-            this.logger.error("Exception creating Object ", e);
-            return new CommunisResponse(e.getMessage());
+            return new CommunisResponse(new CommunisError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
         }
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public CommunisResponse update(@RequestBody T t, Principal principal) {
+    public CommunisResponse update(@RequestBody @Valid T t, Principal principal) {
         this.logger.debug("Request to CREATE object : " + t);
         try {
             t.setLastModifiedBy(principal.getName());
             t.setLastModifiedDate(new Date());
             return new CommunisResponse(this.service.saveOrUpdate(t));
+        } catch (ResponseStatusException r) {
+            return new CommunisResponse(new CommunisError(r.getStatus(), r.getMessage()));
         } catch (Exception e) {
-            this.logger.error("Exception updating Object ", e);
-            return new CommunisResponse(e.getMessage());
+            return new CommunisResponse(new CommunisError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
         }
     }
 

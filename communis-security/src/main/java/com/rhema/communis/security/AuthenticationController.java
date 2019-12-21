@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 @Api(tags = "Authentication")
@@ -30,7 +32,7 @@ public class AuthenticationController {
     private UserSecurityService userDetailsService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public AuthenticationResponse authenticationRequest(@RequestBody AuthenticationRequest authenticationRequest) throws AuthenticationException {
+    public AuthenticationResponse authenticationRequest(@RequestBody @Valid AuthenticationRequest authenticationRequest) throws AuthenticationException {
 
         // Perform the authentication
         Authentication authentication = this.authenticationManager.authenticate(
