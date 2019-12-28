@@ -2,6 +2,7 @@ package com.rhema.communis.mission.domain;
 
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.domain.users.Person;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class Missionary<T extends Ministry> extends Person {
     private String otherDetails4;
     private String otherDetails5;
     private List<T> ministries;
+    @Indexed(name = "mission_missionary_region_idx")
     private String region;
 
     public MissionaryType getType() {
