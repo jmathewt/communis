@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/mission/missionary")
-@Api(tags = "Mission")
+@Api(tags = "Mission - Missionary")
 public class MissionaryController extends AbstractController<Missionary, String> {
 }

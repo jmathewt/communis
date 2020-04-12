@@ -1,5 +1,6 @@
 package com.rhema.communis.mission.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.neovisionaries.i18n.CountryCode;
 import com.rhema.communis.domain.BaseEntity;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -15,11 +16,11 @@ public class Region extends BaseEntity {
     private String missionRegionName;
     private String state;
     private CountryCode country;
-    @DBRef
-    private RegionType regionType;
+    private RegionTier tier;
     @DBRef
     private Set<Sponsor> sponsors = new HashSet<>();
     private String parentRegion;
+    @JsonIgnore
     private Set<String> subRegions = new HashSet<>();
 
     public Set<String> getSubRegions() {
@@ -54,12 +55,12 @@ public class Region extends BaseEntity {
         this.country = country;
     }
 
-    public RegionType getRegionType() {
-        return regionType;
+    public RegionTier getTier() {
+        return tier;
     }
 
-    public void setRegionType(RegionType regionType) {
-        this.regionType = regionType;
+    public void setTier(RegionTier tier) {
+        this.tier = tier;
     }
 
     public Set<Sponsor> getSponsors() {
