@@ -1,14 +1,17 @@
 package com.rhema.communis.repository;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
 @Configuration
-public class MongoConfig extends AbstractMongoConfiguration {
+@EnableMongoAuditing
+public class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Value("${datasource.name}")
     private String DATASTORE;
@@ -21,8 +24,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
     @Override
     public MongoClient mongoClient() {
-        MongoClient mongoClient = new MongoClient(HOST,PORT);
-        return mongoClient;
+        return MongoClients.create("mongodb://" + HOST + ":" + PORT);
     }
 
     /* GridFs Configuration */
