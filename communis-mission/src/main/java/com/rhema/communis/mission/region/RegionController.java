@@ -15,6 +15,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/mission/region")
@@ -41,13 +42,13 @@ public class RegionController extends AbstractController<Region, String> {
 
     @RequestMapping(value = "/{regionId}/subRegion", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<CommunisResponse<Region>> getSubregions(@PathVariable String regionId, @ApiIgnore Principal principal) {
+    public ResponseEntity<CommunisResponse<List<Region>>> getSubregions(@PathVariable String regionId, @ApiIgnore Principal principal) {
         try {
-            return new ResponseEntity<CommunisResponse<Region>>(new CommunisResponse(this.service.findSubRegions(regionId)), HttpStatus.OK);
+            return new ResponseEntity<CommunisResponse<List<Region>>>(new CommunisResponse(this.service.findSubRegions(regionId)), HttpStatus.OK);
         } catch (ResponseStatusException r) {
-            return new ResponseEntity<CommunisResponse<Region>>(new CommunisResponse(new CommunisError(r.getMessage())), r.getStatus());
+            return new ResponseEntity<CommunisResponse<List<Region>>>(new CommunisResponse(new CommunisError(r.getMessage())), r.getStatus());
         } catch (Exception e) {
-            return new ResponseEntity<CommunisResponse<Region>>(new CommunisResponse(new CommunisError(e.getMessage())), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<CommunisResponse<List<Region>>>(new CommunisResponse(new CommunisError(e.getMessage())), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
