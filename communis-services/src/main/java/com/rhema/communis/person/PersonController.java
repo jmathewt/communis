@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/person")
@@ -24,20 +23,18 @@ public class PersonController {
 
     @PostMapping("")
     public PersonDerived create(@RequestBody PersonDerived person){
+        if (null != person.getAddress()) {
+            List<Address> createdAddresses = addressService.createAddresses(person.getAddress());
+            person.setAddress(createdAddresses);
+        }
         return personService.saveOrUpdate(person);
     }
 
     @PutMapping("/{id}/address")
     public PersonDerived updateAddress(@PathVariable String id,
-                                       @RequestBody List<Address> address){
-        List<Address> createdAddresses =  address
-                .stream()
-                .map(addressService::saveOrUpdate)
-                .collect(Collectors.toList());
-        PersonDerived person = personService.find(id);
-        person.setAddress(createdAddresses);
-        personService.saveOrUpdate(person);
-        return personService.find(id);
+                                       @RequestBody List<Address> addresses){
+        List<Address> createdAddresses = addressService.createAddresses(addresses);
+        return personService.updateAddress(id, createdAddresses);
     }
 
     @GetMapping("/{id}")
