@@ -1,4 +1,4 @@
-package com.rhema.communis.mission.domain;
+package com.rhema.communis.mission.domain.media;
 
 import com.rhema.communis.domain.BaseEntity;
 import org.bson.types.Binary;

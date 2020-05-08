@@ -5,8 +5,10 @@ import com.rhema.communis.domain.BaseEntity;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,10 +24,11 @@ public class Person extends BaseEntity {
     private String middleName;
     @Indexed
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private Set<Contact> contacts;
     private boolean active;
-    private List<Address> addresses;
+    @DBRef
+    private List<Address> address;
     @Indexed
     private String identity;
 
@@ -53,11 +56,11 @@ public class Person extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -77,12 +80,12 @@ public class Person extends BaseEntity {
         this.active = active;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public List<Address> getAddress() {
+        return address;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddress(List<Address> address) {
+        this.address = address;
     }
 
     public String getIdentity() {

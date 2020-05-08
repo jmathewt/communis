@@ -1,7 +1,8 @@
 package com.rhema.communis.mission.domain.person;
 
+import com.rhema.communis.domain.Address;
 import com.rhema.communis.domain.users.Person;
-import com.rhema.communis.mission.domain.Photo;
+import com.rhema.communis.mission.domain.media.Photo;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;

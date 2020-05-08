@@ -1,6 +1,7 @@
 package com.rhema.communis.domain;
 
 import com.neovisionaries.i18n.CountryCode;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @CompoundIndexes({
         @CompoundIndex(name = "address_idx", def = "{'street' : 1, 'street2': 1, 'city': 1, 'state': 1, 'country': 1}", unique = true)
 })
+@TypeAlias("address")
 public class Address extends BaseEntity {
     private String street;
     private String street2;

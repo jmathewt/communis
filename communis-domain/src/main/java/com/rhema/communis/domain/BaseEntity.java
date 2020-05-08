@@ -3,6 +3,8 @@ package com.rhema.communis.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class BaseEntity {
@@ -14,13 +16,13 @@ public class BaseEntity {
     private String createdBy;
     @CreatedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date createdDate;
+    private LocalDateTime createdDate;
     @LastModifiedBy
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String lastModifiedBy;
     @LastModifiedDate
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
     @Version
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long version;
@@ -49,11 +51,11 @@ public class BaseEntity {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -65,11 +67,11 @@ public class BaseEntity {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 }
