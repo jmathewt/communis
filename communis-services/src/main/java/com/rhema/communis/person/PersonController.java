@@ -1,44 +1,60 @@
 package com.rhema.communis.person;
 
-import com.rhema.communis.domain.Address;
-import com.rhema.communis.member.AddressService;
+import com.rhema.communis.common.CommunisError;
+import com.rhema.communis.common.CommunisResponse;
 import com.rhema.communis.mission.domain.person.PersonDerived;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
 @RequestMapping("/person")
 public class PersonController {
 
     private final PersonService personService;
-    private final AddressService addressService;
 
     @Autowired
-    public PersonController(PersonService personService, AddressService addressService){
+    public PersonController(PersonService personService){
         this.personService = personService;
-        this.addressService = addressService;
     }
 
     @PostMapping("")
-    public PersonDerived create(@RequestBody PersonDerived person){
-        if (null != person.getAddress()) {
-            List<Address> createdAddresses = addressService.createAddresses(person.getAddress());
-            person.setAddress(createdAddresses);
+    public ResponseEntity<CommunisResponse> create(@RequestBody PersonDerived person){
+        if(person == null) {
+            return new ResponseEntity<>(BAD_REQUEST);
         }
-        return personService.saveOrUpdate(person);
+        return new ResponseEntity<CommunisResponse>(new CommunisResponse(
+                personService.create(person)), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}/address")
-    public PersonDerived updateAddress(@PathVariable String id,
-                                       @RequestBody List<Address> addresses){
-        List<Address> createdAddresses = addressService.createAddresses(addresses);
-        return personService.updateAddress(id, createdAddresses);
+    @PutMapping("/{id}")
+    public ResponseEntity<CommunisResponse> update(@PathVariable String id,
+                                                   @RequestBody PersonDerived person) {
+        try {
+            if(person == null) {
+                return new ResponseEntity<>(BAD_REQUEST);
+            }
+            person.setId(id);
+            return new ResponseEntity<CommunisResponse>(new CommunisResponse(
+                    personService.update(person)), HttpStatus.OK);
+        }catch(IllegalArgumentException e){
+            return new ResponseEntity<CommunisResponse>(new CommunisResponse(
+                    new CommunisError(e.getMessage())), HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @GetMapping("/{id}")
-    public PersonDerived find(@PathVariable String id){
-        return personService.find(id);
+    public ResponseEntity<CommunisResponse> find(@PathVariable String id){
+        PersonDerived retrievedPerson = personService.find(id);
+        if(StringUtils.isEmpty(retrievedPerson.getId())){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<CommunisResponse>(new CommunisResponse(retrievedPerson),
+                HttpStatus.OK);
     }
 }
