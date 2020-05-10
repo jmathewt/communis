@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,18 +29,17 @@ public class AddressService extends AbstractService<Address, String> {
 
     public List<Address> checkAndCreateNonExistantAddresses(List<Address> addressesToCheck){
         if(CollectionUtils.isEmpty(addressesToCheck)){
-            return Arrays.asList();
+            return Collections.emptyList();
         }
         List<Address> nonExistingAddresses = addressesToCheck.stream()
                 .filter(address -> StringUtils.isEmpty(address.getId()))
                 .collect(Collectors.toList());
         if(CollectionUtils.isNotEmpty(nonExistingAddresses)){
-            addressesToCheck.addAll(createAddresses(nonExistingAddresses));
+            createAddresses(nonExistingAddresses);
         }
-        List<Address> createdAddresses = addressesToCheck.stream()
+        return addressesToCheck.stream()
                 .filter(address -> !StringUtils.isEmpty(address.getId()))
                 .collect(Collectors.toList());
-        return createdAddresses;
     }
 
     public List<Address> createAddresses(List<Address> addresses) {

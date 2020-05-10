@@ -3,9 +3,7 @@ package com.rhema.communis.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class BaseEntity {
 

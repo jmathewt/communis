@@ -7,9 +7,11 @@ import com.rhema.communis.mission.domain.person.PersonDerived;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,14 +38,19 @@ public class PersonService extends AbstractService<PersonDerived, String> {
         return saveOrUpdate(person);
     }
 
+    @Transactional
     public PersonDerived update(PersonDerived person) {
+        PersonDerived existingPerson = this.find(person.getId());
+        if(existingPerson == null){
+            throw new IllegalArgumentException("Person - " + person.getId() + " not found");
+        }
         List<Address> personAddresses = addressService.checkAndCreateNonExistantAddresses(
                 person.getAddress());
         if(CollectionUtils.isNotEmpty(personAddresses)){
             person.setAddress(personAddresses);
         }
-
-        return this.saveOrUpdate(person);
+        BeanUtils.copyProperties(person, existingPerson);
+        return this.saveOrUpdate(existingPerson);
     }
 
 }
