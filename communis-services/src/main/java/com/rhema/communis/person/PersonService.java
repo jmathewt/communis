@@ -2,6 +2,7 @@ package com.rhema.communis.person;
 
 import com.rhema.communis.common.AbstractService;
 import com.rhema.communis.mission.domain.person.PersonDerived;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,12 @@ public class PersonService extends AbstractService<PersonDerived, String> {
     @Autowired
     public PersonService(MongoRepository<PersonDerived, String> personRepository){
         this.personRepository = personRepository;
+    }
+
+    public void createPerson(PersonDerived person){
+        if(CollectionUtils.isNotEmpty(person.getAddress())){
+
+        }
     }
 
 }

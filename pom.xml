@@ -33,6 +33,7 @@
         <swagger.version>2.9.2</swagger.version>
         <org.passay>1.5.0</org.passay>
         <org.lombok>1.18.10</org.lombok>
+        <org.apache.commons.collections>4.0</org.apache.commons.collections>
     </properties>
 
     <dependencyManagement>
@@ -81,6 +82,14 @@
                 <artifactId>lombok</artifactId>
                 <version>${org.lombok}</version>
             </dependency>
+
+            <!-- Apache commons -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${org.apache.commons.collections}</version>
+            </dependency>
+
 
             <!-- DEV CLIENT -->
             <dependency>

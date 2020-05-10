@@ -1,13 +1,17 @@
 package com.rhema.communis.person;
 
+import com.rhema.communis.common.CommunisResponse;
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.member.AddressService;
 import com.rhema.communis.mission.domain.person.PersonDerived;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
 @RequestMapping("/person")
@@ -23,11 +27,14 @@ public class PersonController {
     }
 
     @PostMapping("")
-    public PersonDerived create(@RequestBody PersonDerived person){
+    public ResponseEntity<CommunisResponse> create(@RequestBody PersonDerived person){
+        if(person == null){
+            return new ResponseEntity<>(BAD_REQUEST);
+        }
         return personService.saveOrUpdate(person);
     }
 
-    @PutMapping("/{id}/address")
+    @PutMapping("/{id}")
     public PersonDerived updateAddress(@PathVariable String id,
                                        @RequestBody List<Address> address){
         List<Address> createdAddresses =  address
