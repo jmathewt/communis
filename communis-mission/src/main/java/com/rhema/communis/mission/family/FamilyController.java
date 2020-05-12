@@ -1,7 +1,6 @@
 package com.rhema.communis.mission.family;
 
 import com.rhema.communis.mission.domain.family.Family;
-import com.rhema.communis.mission.domain.person.PersonDerived;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

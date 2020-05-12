@@ -1,8 +1,8 @@
-package com.rhema.communis.person;
+package com.rhema.communis.member;
 
 import com.rhema.communis.common.CommunisError;
 import com.rhema.communis.common.CommunisResponse;
-import com.rhema.communis.mission.domain.person.PersonDerived;
+import com.rhema.communis.mission.domain.person.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +13,17 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
 @RequestMapping("/person")
-public class PersonController {
+public class MemberController {
 
-    private final PersonService personService;
+    private final MemberService personService;
 
     @Autowired
-    public PersonController(PersonService personService){
+    public MemberController(MemberService personService){
         this.personService = personService;
     }
 
     @PostMapping("")
-    public ResponseEntity<CommunisResponse> create(@RequestBody PersonDerived person){
+    public ResponseEntity<CommunisResponse> create(@RequestBody Member person){
         if(person == null) {
             return new ResponseEntity<>(BAD_REQUEST);
         }
@@ -33,7 +33,7 @@ public class PersonController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CommunisResponse> update(@PathVariable String id,
-                                                   @RequestBody PersonDerived person) {
+                                                   @RequestBody Member person) {
         try {
             if(person == null) {
                 return new ResponseEntity<>(BAD_REQUEST);
@@ -50,7 +50,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CommunisResponse> find(@PathVariable String id){
-        PersonDerived retrievedPerson = personService.find(id);
+        Member retrievedPerson = personService.find(id);
         if(StringUtils.isEmpty(retrievedPerson.getId())){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
