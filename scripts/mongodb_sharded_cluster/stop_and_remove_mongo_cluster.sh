@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ./shared.sh
+. ../utils.sh
 
 echo "Stopping containers"
 docker stop mdb_server1 mdb_replica_set2_node1 mdb_replica_set1_node1 mdb_config_node1;

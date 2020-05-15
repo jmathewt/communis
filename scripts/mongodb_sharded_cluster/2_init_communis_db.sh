@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. ./utils.sh
+. ../utils.sh
 
 print_info "Create sharded Communis DB and collections"
 echo 'db.createCollection("communis.address")' | docker-compose exec -T mdb_server1 mongo
