@@ -2,6 +2,7 @@ package com.rhema.communis.domain.users;
 
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.domain.BaseEntity;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -17,8 +18,10 @@ import java.util.Set;
 @CompoundIndexes({
         @CompoundIndex(name = "member_idx", def = "{'firstName' : 1, 'lastName': 1, 'dateOfBirth': 1, 'identity': 1}", unique = true)
 })
-public class Person extends BaseEntity {
+public class Person {
 
+    @Id
+    public String id;
     @Indexed
     private String firstName;
     private String middleName;
@@ -31,6 +34,14 @@ public class Person extends BaseEntity {
     private List<Address> address;
     @Indexed
     private String identity;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

@@ -20,13 +20,6 @@ public class AddressService extends AbstractService<Address, String> {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final MongoRepository<Address, String> addressRepository;
-
-    @Autowired
-    public AddressService(MongoRepository<Address, String> addressRepository){
-        this.addressRepository = addressRepository;
-    }
-
     public List<Address> checkAndCreateNonExistantAddresses(List<Address> addressesToCheck){
         if(CollectionUtils.isEmpty(addressesToCheck)){
             return Collections.emptyList();
