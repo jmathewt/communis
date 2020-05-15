@@ -1,27 +1,19 @@
 package com.rhema.communis.domain.users;
 
 import com.rhema.communis.domain.Address;
-import com.rhema.communis.domain.BaseEntity;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
-@Document
 @CompoundIndexes({
         @CompoundIndex(name = "member_idx", def = "{'firstName' : 1, 'lastName': 1, 'dateOfBirth': 1, 'identity': 1}", unique = true)
 })
 public class Person {
 
-    @Id
-    public String id;
     @Indexed
     private String firstName;
     private String middleName;
@@ -31,17 +23,9 @@ public class Person {
     private Set<Contact> contacts;
     private boolean active;
     @DBRef
-    private List<Address> address;
+    private Set<Address> address;
     @Indexed
     private String identity;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -91,11 +75,11 @@ public class Person {
         this.active = active;
     }
 
-    public List<Address> getAddress() {
+    public Set<Address> getAddress() {
         return address;
     }
 
-    public void setAddress(List<Address> address) {
+    public void setAddress(Set<Address> address) {
         this.address = address;
     }
 

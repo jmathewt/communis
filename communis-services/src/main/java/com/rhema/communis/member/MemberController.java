@@ -2,12 +2,15 @@ package com.rhema.communis.member;
 
 import com.rhema.communis.common.CommunisError;
 import com.rhema.communis.common.CommunisResponse;
+import com.rhema.communis.domain.Address;
 import com.rhema.communis.mission.domain.person.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
@@ -56,5 +59,12 @@ public class MemberController {
         }
         return new ResponseEntity<CommunisResponse>(new CommunisResponse(retrievedPerson),
                 HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/address")
+    public ResponseEntity<CommunisResponse> createAddress(@PathVariable String id,
+                                                          @RequestBody Set<Address> address){
+        return new ResponseEntity<CommunisResponse>(
+                new CommunisResponse(personService.createAddress(address, id)), HttpStatus.OK);
     }
 }

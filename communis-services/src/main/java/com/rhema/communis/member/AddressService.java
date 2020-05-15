@@ -5,14 +5,12 @@ import com.rhema.communis.domain.Address;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,25 +18,24 @@ public class AddressService extends AbstractService<Address, String> {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public List<Address> checkAndCreateNonExistantAddresses(List<Address> addressesToCheck){
-        if(CollectionUtils.isEmpty(addressesToCheck)){
-            return Collections.emptyList();
-        }
-        List<Address> nonExistingAddresses = addressesToCheck.stream()
-                .filter(address -> StringUtils.isEmpty(address.getId()))
-                .collect(Collectors.toList());
-        if(CollectionUtils.isNotEmpty(nonExistingAddresses)){
-            createAddresses(nonExistingAddresses);
-        }
-        return addressesToCheck.stream()
-                .filter(address -> !StringUtils.isEmpty(address.getId()))
-                .collect(Collectors.toList());
+    public UnaryOperator<Set<Address>> checkAndCreateNonExistentAddresses(){
+        return newAddresses -> {
+            if(CollectionUtils.isEmpty(newAddresses)){
+                return Collections.emptySet();
+            }
+            Set<Address> nonExistingAddresses = newAddresses.stream()
+                    .filter(address -> StringUtils.isEmpty(address.getId()))
+                    .collect(Collectors.toSet());
+            Set<Address> createdAddresses = CollectionUtils.isNotEmpty(nonExistingAddresses) ?
+                    createAddresses(nonExistingAddresses) : Collections.emptySet();
+            return createdAddresses;
+        };
     }
 
-    public List<Address> createAddresses(List<Address> addresses) {
+    public Set<Address> createAddresses(Set<Address> addresses) {
         return addresses
                 .stream()
                 .map(this::saveOrUpdate)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }
