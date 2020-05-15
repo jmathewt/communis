@@ -1,16 +1,33 @@
 package com.rhema.communis.mission.domain.family;
 
 import com.rhema.communis.domain.BaseEntity;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "family")
-public class Family extends BaseEntity {
+@TypeAlias("family")
+public class Family {
 
+    @Id
+    private String id;
+
+    @Indexed(name = "family_idx")
     private String name;
 
-    private List<FamilyMember> members;
+    private Set<FamilyMember> members;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -20,11 +37,11 @@ public class Family extends BaseEntity {
         this.name = name;
     }
 
-    public List<FamilyMember> getMembers() {
+    public Set<FamilyMember> getMembers() {
         return members;
     }
 
-    public void setMembers(List<FamilyMember> members) {
+    public void setMembers(Set<FamilyMember> members) {
         this.members = members;
     }
 
