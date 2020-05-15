@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
@@ -74,15 +75,21 @@ public class MemberService extends AbstractService<Member, String> {
         };
     }
 
+    @Transactional
     public Member createAddress(Set<Address> newAddresses, String personId){
         Member existingPerson = this.find(personId);
+        Set<Address> existingAddress = CollectionUtils.isEmpty(existingPerson.getAddress()) ?
+                new HashSet<>() : existingPerson.getAddress();
+        existingPerson.setAddress(existingAddress);
         if(CollectionUtils.isNotEmpty(newAddresses)){
             existingPerson.getAddress()
-                    .addAll(addressService.checkAndCreateNonExistentAddresses().apply(newAddresses));
+                    .addAll(addressService.checkAndCreateNonExistentAddresses()
+                    .apply(newAddresses));
         }
         return this.saveOrUpdate(existingPerson);
     }
 
+    @Transactional
     public Member addMemberToAFamily(Family family, String personId){
         Member existingMember = this.find(personId);
         createOrUpdateFamilyForMember().accept(family, existingMember);

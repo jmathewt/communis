@@ -22,7 +22,7 @@ public class AbstractService<T, ID> {
 
     public T find(ID id) {
         logger.info("FIND Object Request for ID [" + id + "]");
-        return this.repository.findById(id).orElse((T) new Person());
+        return this.repository.findById(id).orElse(null);
     }
 
     public List<T> findAll() {

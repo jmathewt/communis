@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "person")
+@Document(collection = "member")
 @TypeAlias("member")
 public class Member extends Person {
 
