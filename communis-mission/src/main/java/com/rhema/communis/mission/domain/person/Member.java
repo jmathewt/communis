@@ -15,7 +15,7 @@ import java.util.List;
 
 @Document(collection = "person")
 @TypeAlias("person")
-public class PersonDerived extends Person {
+public class Member extends Person {
 
     @DBRef
     private String familyId;

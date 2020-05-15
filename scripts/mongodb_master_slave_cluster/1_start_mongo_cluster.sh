@@ -22,7 +22,7 @@ print_info "Sleeping 3 seconds before connecting replica sets"
 sleep 3
 
 print_info "Connect mongo replica sets"
-docker-compose exec mdb_replica_set1_node3 mongo --host replica_set1/mdb_replica_set1_node3,mdb_replica_set1_node3,mdb_replica_set1_node3
+docker-compose exec mdb_replica_set1_node3 mongo --host replica_set1/mdb_replica_set1_node1,mdb_replica_set1_node2,mdb_replica_set1_node3
 
 . ./cluster_status.sh
 
