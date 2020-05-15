@@ -3,6 +3,7 @@ package com.rhema.communis.member;
 import com.rhema.communis.common.CommunisError;
 import com.rhema.communis.common.CommunisResponse;
 import com.rhema.communis.domain.Address;
+import com.rhema.communis.mission.domain.family.Family;
 import com.rhema.communis.mission.domain.person.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,5 +67,12 @@ public class MemberController {
                                                           @RequestBody Set<Address> address){
         return new ResponseEntity<CommunisResponse>(
                 new CommunisResponse(personService.createAddress(address, id)), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/family")
+    public ResponseEntity<CommunisResponse> createFamily(@PathVariable String id,
+                                                          @RequestBody Family family){
+        return new ResponseEntity<CommunisResponse>(
+                new CommunisResponse(personService.addMemberToAFamily(family, id)), HttpStatus.OK);
     }
 }

@@ -12,7 +12,7 @@ public class FamilyService extends AbstractService<Family, String> {
         return this.saveOrUpdate(nonExistantFamily);
     }
 
-    public Family updateFamilyMembers(Family family, String memberId){
+    public Family addFamilyMember(Family family, String memberId){
         Family existingFamily = this.find(family.getId());
         FamilyMember familyMember = family.getMembers().iterator().next();
         familyMember.setPersonId(memberId);
