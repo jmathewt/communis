@@ -55,7 +55,7 @@ public class MemberController {
     @GetMapping("/{id}")
     public ResponseEntity<CommunisResponse> find(@PathVariable String id){
         Member retrievedPerson = personService.find(id);
-        if(StringUtils.isEmpty(retrievedPerson.getId())){
+        if(retrievedPerson == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<CommunisResponse>(new CommunisResponse(retrievedPerson),

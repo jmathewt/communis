@@ -20,6 +20,7 @@ public class Person {
     @Indexed
     private String lastName;
     private LocalDate dateOfBirth;
+    private Gender gender;
     private Set<Contact> contacts;
     private boolean active;
     @DBRef
@@ -57,6 +58,14 @@ public class Person {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public Set<Contact> getContacts() {

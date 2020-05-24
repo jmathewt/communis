@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 @CompoundIndexes({
-        @CompoundIndex(name = "address_idx", def = "{'street' : 1, 'street2': 1, 'city': 1, 'state': 1, 'country': 1}", unique = true)
+        @CompoundIndex(name = "address_idx", def = "{'street' : 1, 'street2': 1, 'city': 1, 'state': 1, 'zipcode': 1, 'country': 1}", unique = true)
 })
 @TypeAlias("address")
 public class Address extends BaseEntity {
@@ -16,6 +16,7 @@ public class Address extends BaseEntity {
     private String street2;
     private String city;
     private String state;
+    private String zipcode;
     private CountryCode country;
     private boolean primary;
 
@@ -51,6 +52,14 @@ public class Address extends BaseEntity {
         this.state = state;
     }
 
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
     public CountryCode getCountry() {
         return country;
     }
@@ -78,6 +87,7 @@ public class Address extends BaseEntity {
         if (!street.equals(address.street)) return false;
         if (street2 != null ? !street2.equals(address.street2) : address.street2 != null) return false;
         if (!city.equals(address.city)) return false;
+        if (!zipcode.equals(address.zipcode)) return false;
         if (!state.equals(address.state)) return false;
         return country.equals(address.country);
     }
@@ -88,6 +98,7 @@ public class Address extends BaseEntity {
         result = 31 * result + (street2 != null ? street2.hashCode() : 0);
         result = 31 * result + city.hashCode();
         result = 31 * result + state.hashCode();
+        result = 31 * result + zipcode.hashCode();
         result = 31 * result + country.hashCode();
         result = 31 * result + (primary ? 1 : 0);
         return result;
