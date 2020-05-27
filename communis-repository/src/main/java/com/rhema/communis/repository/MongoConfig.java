@@ -5,6 +5,8 @@ import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -13,7 +15,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 @EnableMongoAuditing
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
-    @Value("${datasource.name}")
+    /*@Value("${datasource.name}")
     private String DATASTORE;
 
     @Value("${datasource.host}")
@@ -26,11 +28,28 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     public MongoClient mongoClient() {
         return MongoClients.create("mongodb://" + HOST + ":" + PORT);
     }
+    */
+
+    @Value("${spring.data.mongodb.uri}")
+    private String uri;
+
+    @Value("${spring.data.mongodb.database}")
+    private String DATASTORE;
+
+    @Override
+    public MongoClient mongoClient() {
+        return MongoClients.create(uri);
+    }
 
     /* GridFs Configuration */
     @Bean
     public GridFsTemplate gridFsTemplate() throws Exception {
         return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter());
+    }
+
+    @Bean
+    public MongoTransactionManager transactionManager(MongoDbFactory dbFactory){
+        return new MongoTransactionManager(dbFactory);
     }
 
     @Override

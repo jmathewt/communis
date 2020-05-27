@@ -1,5 +1,6 @@
 package com.rhema.communis.common;
 
+import com.rhema.communis.domain.users.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class AbstractService<T, ID> {
 
     public T find(ID id) {
         logger.info("FIND Object Request for ID [" + id + "]");
-        return this.repository.findById(id).get();
+        return this.repository.findById(id).orElse(null);
     }
 
     public List<T> findAll() {
