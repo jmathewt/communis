@@ -1,5 +1,8 @@
 package com.rhema.communis.common;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommunisResponse<T> {
     public T data;
     public CommunisError error;
