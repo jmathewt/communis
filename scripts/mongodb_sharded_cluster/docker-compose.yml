@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  mdb_replica_set1_node1:
+    image: mongo:4.2
+    container_name: mdb_replica_set1_node1
+    command: mongod --shardsvr --replSet replica_set1 --tlsMode disabled --bind_ip 0.0.0.0 --port 27017
+    networks:
+      - communis-network
+
+  mdb_replica_set2_node1:
+    image: mongo:4.2
+    container_name: mdb_replica_set2_node1
+    command: mongod --shardsvr --replSet replica_set2 --tlsMode disabled --bind_ip 0.0.0.0 --port 27017
+    networks:
+      - communis-network
+
+  mdb_config_node1:
+    image: mongo:4.2
+    container_name: mdb_config_node1
+    command: mongod --configsvr --replSet config1 --tlsMode disabled --bind_ip 0.0.0.0 --port 27017
+    networks:
+      - communis-network
+
+  mdb_server1:
+    image: mongo:4.2
+    container_name: mdb_server1
+    command: mongos --configdb config1/mdb_config_node1:27017 --tlsMode disabled --bind_ip 0.0.0.0 --port 27017
+    networks:
+      - communis-network
+    ports:
+      - 27017:27017
+
+networks:
+  communis-network:
+    name: communis-network

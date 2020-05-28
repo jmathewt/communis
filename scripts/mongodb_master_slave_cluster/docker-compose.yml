@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  mdb_replica_set1_node1:
+    image: mongo:4.2
+    container_name: mdb_replica_set1_node1
+    networks:
+      - communis-network
+    command: mongod --replSet replica_set1 --bind_ip 0.0.0.0 --port 27017
+    ports:
+      - 27017:27017
+
+  mdb_replica_set1_node2:
+    image: mongo:4.2
+    container_name: mdb_replica_set1_node2
+    networks:
+      - communis-network
+    command: mongod --replSet replica_set1 --bind_ip 0.0.0.0 --port 27017
+
+  mdb_replica_set1_node3:
+    image: mongo:4.2
+    container_name: mdb_replica_set1_node3
+    networks:
+      - communis-network
+    command: mongod --replSet replica_set1 --bind_ip 0.0.0.0 --port 27017
+
+
+networks:
+  communis-network:
+    name: communis-network

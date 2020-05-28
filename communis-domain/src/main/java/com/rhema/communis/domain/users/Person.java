@@ -1,31 +1,30 @@
 package com.rhema.communis.domain.users;
 
 import com.rhema.communis.domain.Address;
-import com.rhema.communis.domain.BaseEntity;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Set;
 
-@Document
 @CompoundIndexes({
         @CompoundIndex(name = "member_idx", def = "{'firstName' : 1, 'lastName': 1, 'dateOfBirth': 1, 'identity': 1}", unique = true)
 })
-public class Person extends BaseEntity {
+public class Person {
 
     @Indexed
     private String firstName;
     private String middleName;
     @Indexed
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
+    private Gender gender;
     private Set<Contact> contacts;
     private boolean active;
-    private List<Address> addresses;
+    @DBRef
+    private Set<Address> address;
     @Indexed
     private String identity;
 
@@ -53,12 +52,20 @@ public class Person extends BaseEntity {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public Set<Contact> getContacts() {
@@ -77,12 +84,12 @@ public class Person extends BaseEntity {
         this.active = active;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public Set<Address> getAddress() {
+        return address;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddress(Set<Address> address) {
+        this.address = address;
     }
 
     public String getIdentity() {

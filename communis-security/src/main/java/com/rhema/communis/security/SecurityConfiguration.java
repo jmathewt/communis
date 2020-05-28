@@ -71,6 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/person/**", "/family/**").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based authentication
