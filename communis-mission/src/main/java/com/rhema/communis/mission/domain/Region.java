@@ -3,6 +3,8 @@ package com.rhema.communis.mission.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.neovisionaries.i18n.CountryCode;
 import com.rhema.communis.domain.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Document
+@Getter
+@Setter
 public class Region extends BaseEntity {
     @Indexed(name = "mission_region_name_idx")
     private String missionRegionName;
@@ -22,62 +26,6 @@ public class Region extends BaseEntity {
     private String parentRegion;
     @JsonIgnore
     private Set<String> subRegions = new HashSet<>();
-
-    public Set<String> getSubRegions() {
-        return subRegions;
-    }
-
-    public void setSubRegions(Set<String> subRegions) {
-        this.subRegions = subRegions;
-    }
-
-    public String getMissionRegionName() {
-        return missionRegionName;
-    }
-
-    public void setMissionRegionName(String missionRegionName) {
-        this.missionRegionName = missionRegionName;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public CountryCode getCountry() {
-        return country;
-    }
-
-    public void setCountry(CountryCode country) {
-        this.country = country;
-    }
-
-    public RegionTier getTier() {
-        return tier;
-    }
-
-    public void setTier(RegionTier tier) {
-        this.tier = tier;
-    }
-
-    public Set<Sponsor> getSponsors() {
-        return sponsors;
-    }
-
-    public void setSponsors(Set<Sponsor> sponsors) {
-        this.sponsors = sponsors;
-    }
-
-    public String getParentRegion() {
-        return parentRegion;
-    }
-
-    public void setParentRegion(String parentRegion) {
-        this.parentRegion = parentRegion;
-    }
 
     @Override
     public boolean equals(Object o) {

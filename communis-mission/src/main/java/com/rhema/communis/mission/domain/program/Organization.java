@@ -2,11 +2,15 @@ package com.rhema.communis.mission.domain.program;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rhema.communis.domain.Address;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document (collection = "organization")
+@Getter
+@Setter
 public class Organization {
 
     @Id
@@ -15,22 +19,6 @@ public class Organization {
 
     @DBRef
     private Address address;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     @Override
     public String toString() {
