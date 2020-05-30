@@ -1,22 +1,11 @@
 package com.rhema.communis.mission.domain.family;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class FamilyMember {
-
-    public String getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(String id) {
-        this.personId = id;
-    }
-
-    public FamilyMemberType getRelationship() {
-        return relationship;
-    }
-
-    public void setRelationship(FamilyMemberType relationship) {
-        this.relationship = relationship;
-    }
 
     private String personId;
 

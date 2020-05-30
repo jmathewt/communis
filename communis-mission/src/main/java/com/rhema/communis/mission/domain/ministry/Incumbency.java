@@ -1,48 +1,13 @@
 package com.rhema.communis.mission.domain.ministry;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Getter
+@Setter
 public class Incumbency {
-
-    public String getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
-
-    public MinistryType getMinistryType() {
-        return ministryType;
-    }
-
-    public void setMinistryType(MinistryType ministryType) {
-        this.ministryType = ministryType;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public LocalDate getFrom() {
-        return from;
-    }
-
-    public void setFrom(LocalDate from) {
-        this.from = from;
-    }
-
-    public LocalDate getTo() {
-        return to;
-    }
-
-    public void setTo(LocalDate to) {
-        this.to = to;
-    }
 
     private String personId;
     private MinistryType ministryType;

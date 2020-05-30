@@ -1,8 +1,13 @@
 package com.rhema.communis.common;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.NotNull;
 
+@Getter
+@Setter
 public class CommunisError {
     @NotNull
     private Object exception;
@@ -11,11 +16,4 @@ public class CommunisError {
         this.exception = exception;
     }
 
-    public Object getException() {
-        return exception;
-    }
-
-    public void setException(Object exception) {
-        this.exception = exception;
-    }
 }
