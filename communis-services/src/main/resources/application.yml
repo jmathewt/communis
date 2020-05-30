@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://m220student:m220password@communis-fanau.mongodb.net/test
+      uri: mongodb://localhost:27017
       database: communis
 
   servlet:
