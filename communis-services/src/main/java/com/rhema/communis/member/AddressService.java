@@ -35,7 +35,7 @@ public class AddressService extends AbstractService<Address, String> {
     public Set<Address> createAddresses(Set<Address> addresses) {
         return addresses
                 .stream()
-                .map(this::saveOrUpdate)
+                .map(this::save)
                 .collect(Collectors.toSet());
     }
 }

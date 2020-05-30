@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>2.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -34,6 +34,7 @@
         <org.passay>1.5.0</org.passay>
         <org.lombok>1.18.10</org.lombok>
         <org.apache.commons.collections>4.0</org.apache.commons.collections>
+        <javax.validation>2.0.1.Final</javax.validation>
     </properties>
 
     <dependencyManagement>
@@ -76,13 +77,6 @@
                 <version>${org.passay}</version>
             </dependency>
 
-            <!-- Getter Setter Lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${org.lombok}</version>
-            </dependency>
-
             <!-- Apache commons -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -90,13 +84,13 @@
                 <version>${org.apache.commons.collections}</version>
             </dependency>
 
-
-            <!-- DEV CLIENT -->
+            <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-                <version>2.2.6.RELEASE</version>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation}</version>
             </dependency>
+
 
             <!--Country Codes-->
             <dependency>

@@ -6,19 +6,27 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Document
 @CompoundIndexes({
         @CompoundIndex(name = "address_idx", def = "{'street' : 1, 'street2': 1, 'city': 1, 'state': 1, 'zipcode': 1, 'country': 1}", unique = true)
 })
 @TypeAlias("address")
 public class Address extends BaseEntity {
+    @NotEmpty
     private String street;
     private String street2;
+    @NotEmpty
     private String city;
+    @NotEmpty
     private String state;
+    @NotEmpty
     private String zipcode;
+    @NotNull
     private CountryCode country;
-    private boolean primary;
+    private boolean primary = true;
 
     public String getStreet() {
         return street;

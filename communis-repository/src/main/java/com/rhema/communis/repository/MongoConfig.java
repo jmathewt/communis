@@ -1,34 +1,23 @@
 package com.rhema.communis.repository;
 
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import org.bson.UuidRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
 @EnableMongoAuditing
+@EnableMongoRepositories(basePackages = "com.rhema")
 public class MongoConfig extends AbstractMongoClientConfiguration {
-
-    /*@Value("${datasource.name}")
-    private String DATASTORE;
-
-    @Value("${datasource.host}")
-    private String HOST;
-
-    @Value("${datasource.port}")
-    private int PORT;
-
-    @Override
-    public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://" + HOST + ":" + PORT);
-    }
-    */
 
     @Value("${spring.data.mongodb.uri}")
     private String uri;
@@ -41,14 +30,24 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
         return MongoClients.create(uri);
     }
 
+    @Override
+    protected boolean autoIndexCreation() {
+        return true;
+    }
+
+    @Override
+    public void configureClientSettings(MongoClientSettings.Builder builder) {
+        builder.uuidRepresentation(UuidRepresentation.STANDARD);
+    }
+
     /* GridFs Configuration */
     @Bean
     public GridFsTemplate gridFsTemplate() throws Exception {
-        return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter());
+        return new GridFsTemplate(mongoDbFactory(), mappingMongoConverter(mongoDbFactory(), customConversions(), mongoMappingContext(customConversions())));
     }
 
     @Bean
-    public MongoTransactionManager transactionManager(MongoDbFactory dbFactory){
+    public MongoTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
         return new MongoTransactionManager(dbFactory);
     }
 

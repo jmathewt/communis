@@ -1,19 +1,34 @@
 package com.rhema.communis.common;
 
-import com.rhema.communis.domain.users.Person;
+import com.rhema.communis.domain.BaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class AbstractService<T, ID> {
+public class AbstractService<T extends BaseEntity, ID> extends AbstractMongoEventListener<T> {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private MongoOperations mongoOperations;
+
     private MongoRepository<T, ID> repository;
+
+    public MongoRepository<T, ID> getRepository() {
+        return repository;
+    }
+
+    public MongoOperations getMongoOperations() {
+        return mongoOperations;
+    }
 
     @PostConstruct
     public void bootstrap() {
@@ -30,9 +45,24 @@ public class AbstractService<T, ID> {
         return this.repository.findAll();
     }
 
-    public T saveOrUpdate(T t) {
-        logger.info("SAVE OR UPDATE Object Request for object [" + t + "]");
-        return this.repository.save(t);
+    public T save(T t) {
+        logger.info("SAVE Object Request for object [" + t + "]");
+        return this.repository.insert(t);
+    }
+
+    public T update(T t) {
+        AtomicReference<T> out = new AtomicReference<>();
+        if (t.getId() != null) {
+            logger.info("UPDATE Object Request for object [" + t + "]");
+            this.repository.findById((ID) t.getId()).ifPresent(tDb -> {
+                BeanUtils.copyProperties(t, tDb, "version", "createdBy", "createdDate");
+                out.set(repository.save(tDb));
+            });
+        } else {
+            logger.info("SAVE Object Request for object [" + t + "]");
+            out.set(repository.save(t));
+        }
+        return out.get();
     }
 
     public T delete(T t) {

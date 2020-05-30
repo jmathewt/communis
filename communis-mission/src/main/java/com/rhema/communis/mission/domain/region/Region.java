@@ -1,10 +1,7 @@
 package com.rhema.communis.mission.domain.region;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.neovisionaries.i18n.CountryCode;
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.domain.BaseEntity;
-import com.rhema.communis.mission.domain.Sponsor;
 import com.rhema.communis.mission.domain.program.Organization;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;

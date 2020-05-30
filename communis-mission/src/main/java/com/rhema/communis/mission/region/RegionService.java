@@ -30,10 +30,10 @@ public class RegionService extends AbstractService<Region, String> {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Region " + parentRegionId + " not found");
         }
         subRegion.setParentRegion(parentRegionId);
-        this.saveOrUpdate(subRegion);
+        this.save(subRegion);
 
         parent.getSubRegions().add(subRegion.getId());
-        this.saveOrUpdate(parent);
+        this.update(parent);
         logger.info("Created new Sub Region with sub region name " + subRegion.getMissionRegionName());
         return subRegion;
     }
