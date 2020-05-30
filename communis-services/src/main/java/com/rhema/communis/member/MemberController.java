@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Set;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -64,7 +65,7 @@ public class MemberController {
 
     @PutMapping("/{id}/address")
     public ResponseEntity<CommunisResponse> createAddress(@PathVariable String id,
-                                                          @RequestBody Set<Address> address){
+                                                          @RequestBody Collection<Address> address){
         return new ResponseEntity<CommunisResponse>(
                 new CommunisResponse(personService.createAddress(address, id)), HttpStatus.OK);
     }
