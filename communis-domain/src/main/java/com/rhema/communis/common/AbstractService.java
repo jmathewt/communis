@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -90,7 +91,9 @@ public class AbstractService<T extends BaseEntity, ID> extends AbstractMongoEven
             username = principal.toString();
         }
         t.setLastModifiedBy(username);
+        t.setLastModifiedDate(LocalDateTime.now());
         if (t.getCreatedBy() == null || t.getCreatedBy().isEmpty()) {
+            t.setCreatedDate(LocalDateTime.now());
             t.setCreatedBy(username);
         }
 

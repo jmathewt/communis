@@ -27,8 +27,8 @@ public class OrganizationService extends AbstractService<Organization, String> {
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Organization> event) {
         Address address = event.getSource().getAddress();
-        if (address != null) {
-            addressService.update(event.getSource().getAddress());
+        if (address != null && address.getId() == null) {
+            addressService.save(event.getSource().getAddress());
         }
     }
 }
