@@ -8,12 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.security.Principal;
 
 public abstract class AbstractController<T extends BaseEntity, ID extends Serializable> {
 
@@ -62,7 +60,7 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<CommunisResponse> create(@RequestBody @Valid T t, @ApiIgnore Principal principal) {
+    public ResponseEntity<CommunisResponse> create(@RequestBody @Valid T t) {
         this.logger.debug("Request to CREATE object : " + t);
         try {
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(this.service.save(t)), HttpStatus.OK);
@@ -75,7 +73,7 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<CommunisResponse> update(@RequestBody @Valid T t, @ApiIgnore Principal principal) {
+    public ResponseEntity<CommunisResponse> update(@RequestBody @Valid T t) {
         this.logger.debug("Request to CREATE object : " + t);
         try {
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(this.service.update(t)), HttpStatus.OK);

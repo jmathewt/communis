@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,17 +19,10 @@ public class AbstractService<T extends BaseEntity, ID> extends AbstractMongoEven
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private MongoOperations mongoOperations;
-
     private MongoRepository<T, ID> repository;
 
     public MongoRepository<T, ID> getRepository() {
         return repository;
-    }
-
-    public MongoOperations getMongoOperations() {
-        return mongoOperations;
     }
 
     @PostConstruct
