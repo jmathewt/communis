@@ -13,12 +13,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.0.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from documents -->
     </parent>
 
     <modules>
         <module>communis-services</module>
-        <module>communis-repository</module>
+        <module>communis-core</module>
         <module>communis-security</module>
         <module>communis-domain</module>
         <module>communis-peripherals</module>
@@ -51,7 +51,7 @@
             </dependency>
             <dependency>
                 <groupId>com.rhema.communis</groupId>
-                <artifactId>communis-repository</artifactId>
+                <artifactId>communis-core</artifactId>
                 <version>${version}</version>
             </dependency>
             <dependency>

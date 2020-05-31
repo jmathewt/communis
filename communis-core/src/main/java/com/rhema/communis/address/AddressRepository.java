@@ -1,4 +1,4 @@
-package com.rhema.communis.member;
+package com.rhema.communis.address;
 
 import com.rhema.communis.domain.Address;
 import org.springframework.data.mongodb.repository.MongoRepository;

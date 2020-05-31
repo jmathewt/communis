@@ -1,4 +1,4 @@
-package com.rhema.communis.repository;
+package com.rhema.communis.config;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;

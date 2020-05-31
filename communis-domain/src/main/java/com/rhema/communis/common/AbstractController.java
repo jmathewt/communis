@@ -65,8 +65,6 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
     public ResponseEntity<CommunisResponse> create(@RequestBody @Valid T t, @ApiIgnore Principal principal) {
         this.logger.debug("Request to CREATE object : " + t);
         try {
-            t.setCreatedBy(principal.getName());
-            t.setLastModifiedBy(principal.getName());
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(this.service.save(t)), HttpStatus.OK);
         } catch (ResponseStatusException r) {
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(new CommunisError(r.getMessage())), r.getStatus());
@@ -80,7 +78,6 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
     public ResponseEntity<CommunisResponse> update(@RequestBody @Valid T t, @ApiIgnore Principal principal) {
         this.logger.debug("Request to CREATE object : " + t);
         try {
-            t.setLastModifiedBy(principal.getName());
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(this.service.update(t)), HttpStatus.OK);
         } catch (ResponseStatusException r) {
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(new CommunisError(r.getMessage())), r.getStatus());

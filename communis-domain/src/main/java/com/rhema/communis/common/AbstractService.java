@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -32,7 +34,7 @@ public class AbstractService<T extends BaseEntity, ID> extends AbstractMongoEven
 
     @PostConstruct
     public void bootstrap() {
-        logger.info(" Bootstrapped [" + this.getClass() + "] service with repository [" + this.repository + "]");
+        logger.info(" Bootstrapped [" + this.getClass() + "] service with documents [" + this.repository + "]");
     }
 
     public T find(ID id) {
@@ -46,11 +48,13 @@ public class AbstractService<T extends BaseEntity, ID> extends AbstractMongoEven
     }
 
     public T save(T t) {
+        populateAuditFromSecurityContext(t);
         logger.info("SAVE Object Request for object [" + t + "]");
         return this.repository.insert(t);
     }
 
     public T update(T t) {
+        populateAuditFromSecurityContext(t);
         AtomicReference<T> out = new AtomicReference<>();
         if (t.getId() != null) {
             logger.info("UPDATE Object Request for object [" + t + "]");
@@ -75,6 +79,21 @@ public class AbstractService<T extends BaseEntity, ID> extends AbstractMongoEven
         this.repository.deleteById(id);
         logger.info("DELETE Object Request for ID [" + id + "]");
         return id;
+    }
+
+    private void populateAuditFromSecurityContext(T t) {
+        String username = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        t.setLastModifiedBy(username);
+        if (t.getCreatedBy() == null || t.getCreatedBy().isEmpty()) {
+            t.setCreatedBy(username);
+        }
+
     }
 
     @Autowired

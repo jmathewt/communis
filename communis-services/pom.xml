@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>com.rhema.communis</groupId>
-            <artifactId>communis-repository</artifactId>
+            <artifactId>communis-core</artifactId>
         </dependency>
 
         <dependency>

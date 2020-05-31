@@ -1,5 +1,6 @@
 package com.rhema.communis.mission.organization;
 
+import com.rhema.communis.address.AddressService;
 import com.rhema.communis.common.AbstractService;
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.mission.domain.program.Organization;
@@ -15,17 +16,19 @@ public class OrganizationService extends AbstractService<Organization, String> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private OrganizationRepository regionRepository;
+    private AddressService addressService;
 
     @Autowired
-    public OrganizationService(OrganizationRepository regionRepository) {
+    public OrganizationService(OrganizationRepository regionRepository, AddressService addressService) {
         this.regionRepository = regionRepository;
+        this.addressService = addressService;
     }
 
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Organization> event) {
         Address address = event.getSource().getAddress();
-        if (address != null && address.getId() == null) {
-            getMongoOperations().save(event.getSource().getAddress());
+        if (address != null) {
+            addressService.update(event.getSource().getAddress());
         }
     }
 }
