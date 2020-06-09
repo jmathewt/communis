@@ -15,21 +15,6 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 @EnableMongoAuditing
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
-    /*@Value("${datasource.name}")
-    private String DATASTORE;
-
-    @Value("${datasource.host}")
-    private String HOST;
-
-    @Value("${datasource.port}")
-    private int PORT;
-
-    @Override
-    public MongoClient mongoClient() {
-        return MongoClients.create("mongodb://" + HOST + ":" + PORT);
-    }
-    */
-
     @Value("${spring.data.mongodb.uri}")
     private String uri;
 

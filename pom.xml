@@ -90,14 +90,6 @@
                 <version>${org.apache.commons.collections}</version>
             </dependency>
 
-
-            <!-- DEV CLIENT -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
-                <version>2.2.6.RELEASE</version>
-            </dependency>
-
             <!--Country Codes-->
             <dependency>
                 <groupId>com.neovisionaries</groupId>
