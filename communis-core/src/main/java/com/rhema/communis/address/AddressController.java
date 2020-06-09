@@ -1,4 +1,4 @@
-package com.rhema.communis.member;
+package com.rhema.communis.address;
 
 import com.rhema.communis.common.AbstractController;
 import com.rhema.communis.common.CommunisError;

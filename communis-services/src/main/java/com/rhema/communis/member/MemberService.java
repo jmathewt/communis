@@ -1,5 +1,6 @@
 package com.rhema.communis.member;
 
+import com.rhema.communis.address.AddressService;
 import com.rhema.communis.common.AbstractService;
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.mission.domain.family.Family;
@@ -48,24 +49,24 @@ public class MemberService extends AbstractService<Member, String> {
         }
         Family family = person.getFamily();
         person.setFamily(null);
-        person = saveOrUpdate(person);
+        person = save(person);
         if(family != null && family.getMembers() != null && family.getMembers().size()>1){
             throw new IllegalArgumentException("Family members should only include one entry");
         }else if(family != null && CollectionUtils.isNotEmpty(family.getMembers())){
             createOrUpdateFamilyForMember().accept(family, person);
-            person = saveOrUpdate(person);
+            person = save(person);
         }
         return person;
     }
 
-    public Member update(Member person) {
+    public Member updateMember(Member person) {
         Member existingPerson = this.find(person.getId());
         if(existingPerson == null){
             throw new IllegalArgumentException("Person - " + person.getId() + " not found");
         }
         fillExistingMemberProperties().accept(person, existingPerson);
         BeanUtils.copyProperties(person, existingPerson);
-        this.saveOrUpdate(existingPerson);
+        this.update(existingPerson);
         return this.find(person.getId());
     }
 
@@ -90,14 +91,14 @@ public class MemberService extends AbstractService<Member, String> {
                     .addAll(addressService.checkAndCreateNonExistentAddresses()
                     .apply(new HashSet<>(newAddresses)));
         }
-        return this.saveOrUpdate(existingPerson);
+        return this.update(existingPerson);
     }
 
     @Transactional
     public Member addMemberToAFamily(Family family, String personId){
         Member existingMember = this.find(personId);
         createOrUpdateFamilyForMember().accept(family, existingMember);
-        return this.saveOrUpdate(existingMember);
+        return this.update(existingMember);
     }
 
     private BiConsumer<Family, Member> createOrUpdateFamilyForMember(){

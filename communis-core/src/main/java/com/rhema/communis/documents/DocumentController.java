@@ -1,6 +1,5 @@
-package com.rhema.communis.attachment;
+package com.rhema.communis.documents;
 
-import com.rhema.communis.repository.FileUploadTemplate;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsResource;

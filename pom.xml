@@ -12,13 +12,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.6.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.3.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from documents -->
     </parent>
 
     <modules>
         <module>communis-services</module>
-        <module>communis-repository</module>
+        <module>communis-core</module>
         <module>communis-security</module>
         <module>communis-domain</module>
         <module>communis-peripherals</module>
@@ -34,6 +34,7 @@
         <org.passay>1.5.0</org.passay>
         <org.lombok>1.18.10</org.lombok>
         <org.apache.commons.collections>4.0</org.apache.commons.collections>
+        <javax.validation>2.0.1.Final</javax.validation>
     </properties>
 
     <dependencyManagement>
@@ -50,7 +51,7 @@
             </dependency>
             <dependency>
                 <groupId>com.rhema.communis</groupId>
-                <artifactId>communis-repository</artifactId>
+                <artifactId>communis-core</artifactId>
                 <version>${version}</version>
             </dependency>
             <dependency>
@@ -76,19 +77,19 @@
                 <version>${org.passay}</version>
             </dependency>
 
-            <!-- Getter Setter Lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${org.lombok}</version>
-            </dependency>
-
             <!-- Apache commons -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${org.apache.commons.collections}</version>
             </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation}</version>
+            </dependency>
+
 
             <!--Country Codes-->
             <dependency>

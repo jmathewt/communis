@@ -21,11 +21,15 @@
         </dependency>
         <dependency>
             <groupId>com.rhema.communis</groupId>
-            <artifactId>communis-repository</artifactId>
+            <artifactId>communis-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
 
     </dependencies>

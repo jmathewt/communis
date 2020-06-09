@@ -1,4 +1,4 @@
-package com.rhema.communis.repository;
+package com.rhema.communis.documents;
 
 import com.mongodb.client.gridfs.model.GridFSFile;
 import org.slf4j.Logger;

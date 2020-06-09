@@ -1,4 +1,4 @@
-package com.rhema.communis.core;
+package com.rhema.communis.metadata;
 
 import com.neovisionaries.i18n.CountryCode;
 import com.rhema.communis.common.CommunisError;

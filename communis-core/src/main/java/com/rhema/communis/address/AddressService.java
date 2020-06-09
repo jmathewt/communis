@@ -1,4 +1,4 @@
-package com.rhema.communis.member;
+package com.rhema.communis.address;
 
 import com.rhema.communis.common.AbstractService;
 import com.rhema.communis.domain.Address;
@@ -35,7 +35,7 @@ public class AddressService extends AbstractService<Address, String> {
     public Set<Address> createAddresses(Set<Address> addresses) {
         return addresses
                 .stream()
-                .map(this::saveOrUpdate)
+                .map(this::save)
                 .collect(Collectors.toSet());
     }
 }
