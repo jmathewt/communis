@@ -1,6 +1,8 @@
 package com.rhema.communis.security.model;
 
 import com.rhema.communis.domain.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 @Document
+@Getter
+@Setter
 public class Identity extends BaseEntity implements UserDetails {
 
     @Indexed(unique = true)
@@ -67,47 +71,4 @@ public class Identity extends BaseEntity implements UserDetails {
         return this.enabled;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setAccountNonExpired(boolean accountNonExpired) {
-        this.accountNonExpired = accountNonExpired;
-    }
-
-    public void setAccountNonLocked(boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
-    }
-
-    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-        this.credentialsNonExpired = credentialsNonExpired;
-    }
-
-    public Date getLastPasswordReset() {
-        return lastPasswordReset;
-    }
-
-    public void setLastPasswordReset(Date lastPasswordReset) {
-        this.lastPasswordReset = lastPasswordReset;
-    }
-
-    public void setAuthorities(Collection<SimpleGrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
-    public Date getLastLoggedIn() {
-        return lastLoggedIn;
-    }
-
-    public void setLastLoggedIn(Date lastLoggedIn) {
-        this.lastLoggedIn = lastLoggedIn;
-    }
 }

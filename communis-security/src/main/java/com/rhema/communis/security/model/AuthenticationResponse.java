@@ -1,5 +1,10 @@
 package com.rhema.communis.security.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AuthenticationResponse {
     private String token;
 
@@ -7,10 +12,4 @@ public class AuthenticationResponse {
         this.token = token;
     }
 
-    public String getToken() {
-        return this.token;
-    }
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
