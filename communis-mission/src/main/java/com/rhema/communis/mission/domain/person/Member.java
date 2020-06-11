@@ -5,7 +5,6 @@ import com.rhema.communis.mission.domain.family.Family;
 import com.rhema.communis.mission.domain.media.Photo;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,9 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 public class Member extends Person {
-
-    @Id
-    public String id;
     @DBRef
     private Family family;
     private String testimony;
@@ -32,7 +28,6 @@ public class Member extends Person {
                 "family=" + family +
                 ", testimony='" + testimony + '\'' +
                 ", photos=" + photos +
-                ", id='" + id + '\'' +
                 '}';
     }
 }

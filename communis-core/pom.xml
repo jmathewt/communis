@@ -2,17 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.rhema.communis</groupId>
         <artifactId>communis</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>communis-services</artifactId>
+    <artifactId>communis-core</artifactId>
 
-    <name>communis-services</name>
-    <description>Services for Communis</description>
+    <name>communis-core</name>
+    <description>Core APIs for Communis</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -21,11 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
         <dependency>
@@ -33,32 +28,21 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.rhema.communis</groupId>
-            <artifactId>communis-core</artifactId>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.rhema.communis</groupId>
-            <artifactId>communis-security</artifactId>
+            <artifactId>communis-domain</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.rhema.communis</groupId>
-            <artifactId>communis-peripherals</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.rhema.communis</groupId>
-            <artifactId>communis-mission</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
         </dependency>
-
     </dependencies>
+
 
 </project>

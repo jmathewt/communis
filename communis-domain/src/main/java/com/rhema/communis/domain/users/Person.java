@@ -3,6 +3,7 @@ package com.rhema.communis.domain.users;
 import com.rhema.communis.domain.Address;
 import lombok.Getter;
 import lombok.Setter;
+import com.rhema.communis.domain.BaseEntity;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -16,7 +17,7 @@ import java.util.Set;
 })
 @Getter
 @Setter
-public class Person {
+public class Person extends BaseEntity {
 
     @Indexed
     private String firstName;

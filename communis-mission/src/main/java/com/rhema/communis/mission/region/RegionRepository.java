@@ -1,6 +1,6 @@
 package com.rhema.communis.mission.region;
 
-import com.rhema.communis.mission.domain.Region;
+import com.rhema.communis.mission.domain.region.Region;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

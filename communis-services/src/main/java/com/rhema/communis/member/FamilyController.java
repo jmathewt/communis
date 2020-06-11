@@ -44,6 +44,6 @@ public class FamilyController {
         family.setId(id);
         family.setMembers(existingFamily.getMembers());
         return new ResponseEntity<CommunisResponse>(new CommunisResponse(
-                familyService.saveOrUpdate(family)), HttpStatus.OK);
+                familyService.update(family)), HttpStatus.OK);
     }
 }

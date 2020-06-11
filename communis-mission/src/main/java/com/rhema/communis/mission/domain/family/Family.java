@@ -2,7 +2,7 @@ package com.rhema.communis.mission.domain.family;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import com.rhema.communis.domain.BaseEntity;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,10 +13,7 @@ import java.util.Set;
 @TypeAlias("family")
 @Getter
 @Setter
-public class Family {
-
-    @Id
-    private String id;
+public class Family extends BaseEntity {
 
     @Indexed(name = "family_idx")
     private String name;

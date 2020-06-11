@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class FamilyService extends AbstractService<Family, String> {
 
     public Family createFamily(Family nonExistantFamily) {
-        return this.saveOrUpdate(nonExistantFamily);
+        return this.save(nonExistantFamily);
     }
 
     public Family addFamilyMember(Family family, String memberId){
@@ -17,6 +17,6 @@ public class FamilyService extends AbstractService<Family, String> {
         FamilyMember familyMember = family.getMembers().iterator().next();
         familyMember.setPersonId(memberId);
         existingFamily.getMembers().add(familyMember);
-        return this.saveOrUpdate(existingFamily);
+        return this.update(existingFamily);
     }
 }
