@@ -20,22 +20,6 @@ public class Family extends BaseEntity {
 
     private Set<FamilyMember> members;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<FamilyMember> getMembers() {
-        return members;
-    }
-
-    public void setMembers(Set<FamilyMember> members) {
-        this.members = members;
-    }
-
     @Override
     public String toString() {
         return "Family{" +

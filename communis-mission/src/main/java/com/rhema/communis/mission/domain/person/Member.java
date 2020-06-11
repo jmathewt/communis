@@ -22,30 +22,6 @@ public class Member extends Person {
     @DBRef
     private List<Photo> photos;
 
-    public Family getFamily() {
-        return family;
-    }
-
-    public void setFamily(Family family) {
-        this.family = family;
-    }
-
-    public String getTestimony() {
-        return testimony;
-    }
-
-    public void setTestimony(String testimony) {
-        this.testimony = testimony;
-    }
-
-    public List<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
-    }
-
     @Override
     public String toString() {
         return "Member{" +
