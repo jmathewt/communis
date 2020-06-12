@@ -6,8 +6,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Document
 @CompoundIndexes({
@@ -15,14 +16,14 @@ import javax.validation.constraints.NotNull;
 })
 @TypeAlias("address")
 public class Address extends BaseEntity {
-    @NotEmpty
+    @NotBlank
     private String street;
     private String street2;
-    @NotEmpty
+    @NotBlank
     private String city;
-    @NotEmpty
+    @NotBlank
     private String state;
-    @NotEmpty
+    @Pattern(regexp = "^[0-9]*$")
     private String zipcode;
     @NotNull
     private CountryCode country;
