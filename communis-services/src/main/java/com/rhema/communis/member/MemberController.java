@@ -15,7 +15,7 @@ import java.util.Collection;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/services/person")
 public class MemberController {
 
     private final MemberService memberService;
