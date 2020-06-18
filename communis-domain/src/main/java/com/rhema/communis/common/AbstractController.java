@@ -24,7 +24,12 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
     public ResponseEntity<CommunisResponse> findOne(@PathVariable @NotEmpty ID id) {
         this.logger.debug("Request to Find for id : " + id);
         try {
-            return new ResponseEntity<CommunisResponse>(new CommunisResponse(this.service.find(id)), HttpStatus.OK);
+            T result = this.service.find(id);
+            return result == null ? new ResponseEntity<CommunisResponse>(new CommunisResponse(
+                    new CommunisError("Unable to find result for id - " + id)),
+                    HttpStatus.NOT_FOUND) :
+                    new ResponseEntity<CommunisResponse>(new CommunisResponse(result),
+                            HttpStatus.OK);
         } catch (ResponseStatusException r) {
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(new CommunisError(r.getMessage())), r.getStatus());
         } catch (Exception e) {

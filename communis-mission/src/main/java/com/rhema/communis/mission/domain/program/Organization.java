@@ -2,6 +2,8 @@ package com.rhema.communis.mission.domain.program;
 
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.domain.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Document(collection = "organization")
+@Getter
+@Setter
 public class Organization extends BaseEntity {
 
     @NotBlank
@@ -31,22 +35,6 @@ public class Organization extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     @Override

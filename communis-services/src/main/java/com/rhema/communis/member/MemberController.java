@@ -10,19 +10,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.Collection;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/services/person")
 public class MemberController {
 
-    private final MemberService personService;
+    private final MemberService memberService;
 
     @Autowired
-    public MemberController(MemberService personService){
-        this.personService = personService;
+    public MemberController(MemberService memberService){
+        this.memberService = memberService;
     }
 
     @PostMapping("")
@@ -31,7 +31,7 @@ public class MemberController {
             return new ResponseEntity<>(BAD_REQUEST);
         }
         return new ResponseEntity<CommunisResponse>(new CommunisResponse(
-                personService.create(person)), HttpStatus.OK);
+                memberService.create(person)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -43,7 +43,7 @@ public class MemberController {
             }
             person.setId(id);
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(
-                    personService.update(person)), HttpStatus.OK);
+                    memberService.updateMember(person)), HttpStatus.OK);
         }catch(IllegalArgumentException e){
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(
                     new CommunisError(e.getMessage())), HttpStatus.NOT_FOUND);
@@ -53,7 +53,7 @@ public class MemberController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CommunisResponse> find(@PathVariable String id){
-        Member retrievedPerson = personService.find(id);
+        Member retrievedPerson = memberService.find(id);
         if(retrievedPerson == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -63,15 +63,15 @@ public class MemberController {
 
     @PutMapping("/{id}/address")
     public ResponseEntity<CommunisResponse> createAddress(@PathVariable String id,
-                                                          @RequestBody Set<Address> address){
+                                                          @RequestBody Collection<Address> address){
         return new ResponseEntity<CommunisResponse>(
-                new CommunisResponse(personService.createAddress(address, id)), HttpStatus.OK);
+                new CommunisResponse(memberService.createAddress(address, id)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/family")
     public ResponseEntity<CommunisResponse> createFamily(@PathVariable String id,
                                                           @RequestBody Family family){
         return new ResponseEntity<CommunisResponse>(
-                new CommunisResponse(personService.addMemberToAFamily(family, id)), HttpStatus.OK);
+                new CommunisResponse(memberService.addMemberToAFamily(family, id)), HttpStatus.OK);
     }
 }

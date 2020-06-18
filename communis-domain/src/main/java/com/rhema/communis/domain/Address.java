@@ -1,6 +1,8 @@
 package com.rhema.communis.domain;
 
 import com.neovisionaries.i18n.CountryCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -14,6 +16,8 @@ import javax.validation.constraints.Pattern;
 @CompoundIndexes({
         @CompoundIndex(name = "address_idx", def = "{'street' : 1, 'street2': 1, 'city': 1, 'state': 1, 'zipcode': 1, 'country': 1}", unique = true)
 })
+@Getter
+@Setter
 @TypeAlias("address")
 public class Address extends BaseEntity {
     @NotBlank
@@ -28,62 +32,6 @@ public class Address extends BaseEntity {
     @NotNull
     private CountryCode country;
     private boolean primary = true;
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getStreet2() {
-        return street2;
-    }
-
-    public void setStreet2(String street2) {
-        this.street2 = street2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public CountryCode getCountry() {
-        return country;
-    }
-
-    public void setCountry(CountryCode country) {
-        this.country = country;
-    }
-
-    public boolean isPrimary() {
-        return primary;
-    }
-
-    public void setPrimary(boolean primary) {
-        this.primary = primary;
-    }
 
     @Override
     public boolean equals(Object o) {
