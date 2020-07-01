@@ -30,6 +30,7 @@ public class MemberController {
         if(person == null) {
             return new ResponseEntity<>(BAD_REQUEST);
         }
+        person.setActive(true);
         return new ResponseEntity<CommunisResponse>(new CommunisResponse(
                 memberService.create(person)), HttpStatus.OK);
     }
