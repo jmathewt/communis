@@ -35,6 +35,12 @@ public class MemberController {
                 memberService.create(person)), HttpStatus.OK);
     }
 
+    @GetMapping("")
+    public ResponseEntity<CommunisResponse> findAll(){
+        return new ResponseEntity<CommunisResponse>(new CommunisResponse(
+                memberService.findAll()), HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<CommunisResponse> update(@PathVariable String id,
                                                    @RequestBody Member person) {
