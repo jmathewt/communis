@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
 @RequestMapping("/api/services/person")
@@ -28,15 +29,22 @@ public class MemberController {
     @PostMapping("")
     public ResponseEntity<CommunisResponse> create(@RequestBody Member person){
         if(person == null) {
-            return new ResponseEntity<>(BAD_REQUEST);
+            return new ResponseEntity<CommunisResponse>(new CommunisResponse("Request payload is incorrect!"),
+                    BAD_REQUEST);
         }
         person.setActive(true);
-        return new ResponseEntity<CommunisResponse>(new CommunisResponse(
-                memberService.create(person)), HttpStatus.OK);
+        try{
+            return new ResponseEntity<CommunisResponse>(new CommunisResponse(
+                    memberService.create(person)), HttpStatus.OK);
+        }catch (IllegalArgumentException e){
+            return new ResponseEntity<CommunisResponse>(new CommunisResponse(e.getMessage()), BAD_REQUEST);
+        }catch(Exception e){
+            return new ResponseEntity<CommunisResponse>(new CommunisResponse(e.getMessage()), INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("")
-    public ResponseEntity<CommunisResponse> findAll(){
+    public ResponseEntity<CommunisResponse> getAll(){
         return new ResponseEntity<CommunisResponse>(new CommunisResponse(
                 memberService.findAll()), HttpStatus.OK);
     }
