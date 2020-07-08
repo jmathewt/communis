@@ -3,6 +3,7 @@ package com.rhema.communis.member;
 import com.rhema.communis.address.AddressService;
 import com.rhema.communis.common.AbstractService;
 import com.rhema.communis.domain.Address;
+import com.rhema.communis.domain.users.Contact;
 import com.rhema.communis.mission.domain.family.Family;
 import com.rhema.communis.mission.domain.family.FamilyMember;
 import com.rhema.communis.mission.domain.person.Member;
@@ -41,6 +42,13 @@ public class MemberService extends AbstractService<Member, String> {
 
     @Transactional
     public Member create(Member person){
+        if(CollectionUtils.isNotEmpty(person.getContacts())){
+            Set<Contact> contacts = person.getContacts();
+            boolean isMoreThanOnePrimaryContact = contacts.stream().filter(contact -> contact.isPrimary()).count() > 1;
+            if(isMoreThanOnePrimaryContact){
+                throw new IllegalArgumentException("There is more than one primary contact information!");
+            }
+        }
         if(CollectionUtils.isNotEmpty(person.getAddress())){
             Set<Address> addressToBeCreated = person.getAddress().stream()
                     .filter(address -> StringUtils.isEmpty(address.getId()))
