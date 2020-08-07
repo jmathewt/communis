@@ -2,6 +2,7 @@ package com.rhema.communis.mission.domain.region;
 
 import com.rhema.communis.domain.Address;
 import com.rhema.communis.domain.BaseEntity;
+import com.rhema.communis.mission.domain.ministry.Ministry;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -21,7 +22,6 @@ public class Region extends BaseEntity {
     private String organization;
     @Indexed(name = "mission_region_name_idx")
     @NotBlank
-
     private String name;
     @NotNull
     private RegionTier tier;
@@ -30,5 +30,6 @@ public class Region extends BaseEntity {
     private Address address;
     private String parentRegion;
     private Set<String> subRegions = new HashSet<>();
+    private Set<Ministry> ministries = new HashSet<>();
 
 }

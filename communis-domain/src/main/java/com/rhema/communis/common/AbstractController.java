@@ -65,7 +65,7 @@ public abstract class AbstractController<T extends BaseEntity, ID extends Serial
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<CommunisResponse> create(@RequestBody @Valid T t) {
+    public ResponseEntity<CommunisResponse> create(@Valid @RequestBody T t) {
         this.logger.debug("Request to CREATE object : " + t);
         try {
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(this.service.save(t)), HttpStatus.OK);

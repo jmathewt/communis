@@ -1,23 +1,28 @@
-package com.rhema.communis.common;
-
+package com.rhema.communis.exception;
 
 import org.springframework.http.HttpStatus;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class CommunisError {
+public class ApiError {
+
     private HttpStatus status;
-    private Object message;
+    private String message;
     private List<String> errors;
 
-    public CommunisError(Object message) {
-        this.message = message;
-    }
-
-    public CommunisError(HttpStatus status, Object message, List<String> errors) {
+    public ApiError(HttpStatus status, String message, List<String> errors) {
+        super();
         this.status = status;
         this.message = message;
         this.errors = errors;
+    }
+
+    public ApiError(HttpStatus status, String message, String error) {
+        super();
+        this.status = status;
+        this.message = message;
+        errors = Arrays.asList(error);
     }
 
     public HttpStatus getStatus() {
@@ -28,11 +33,11 @@ public class CommunisError {
         this.status = status;
     }
 
-    public Object getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Object message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

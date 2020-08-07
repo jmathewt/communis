@@ -1,29 +1,30 @@
 package com.rhema.communis.mission.domain.ministry;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.rhema.communis.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-public class Ministry {
+@Document
+public class Ministry extends BaseEntity {
 
-    @JsonProperty("_id")
-    private String id;
-
+    Set<Incumbency> incumbents;
+    @NotNull
     private MinistryType ministryType;
-
+    @NotNull
     private Frequency frequency;
-
-    private String dayOfWeek;
-
+    @NotNull
+    private DayOfWeek dayOfWeek;
+    @NotNull
     private LocalTime startTime;
-
+    @NotNull
     private LocalTime endTime;
-
-    List<Incumbency> incumbents;
 
 }

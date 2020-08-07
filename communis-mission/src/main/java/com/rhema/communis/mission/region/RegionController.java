@@ -3,6 +3,7 @@ package com.rhema.communis.mission.region;
 import com.rhema.communis.common.AbstractController;
 import com.rhema.communis.common.CommunisError;
 import com.rhema.communis.common.CommunisResponse;
+import com.rhema.communis.mission.domain.ministry.Frequency;
 import com.rhema.communis.mission.domain.region.Region;
 import com.rhema.communis.mission.domain.region.RegionTier;
 import io.swagger.annotations.Api;
@@ -53,5 +54,11 @@ public class RegionController extends AbstractController<Region, String> {
     @ResponseBody
     public ResponseEntity<CommunisResponse<RegionTier[]>> getRegionTiers() {
         return new ResponseEntity<CommunisResponse<RegionTier[]>>(new CommunisResponse(RegionTier.values()), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/ministryFrequency", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<CommunisResponse<Frequency[]>> getMinistryTypes() {
+        return new ResponseEntity<CommunisResponse<Frequency[]>>(new CommunisResponse(Frequency.values()), HttpStatus.OK);
     }
 }

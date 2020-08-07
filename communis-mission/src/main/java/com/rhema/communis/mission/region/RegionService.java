@@ -19,8 +19,8 @@ public class RegionService extends AbstractService<Region, String> {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private RegionRepository regionRepository;
-    private AddressService addressService;
+    private final RegionRepository regionRepository;
+    private final AddressService addressService;
 
     @Autowired
     public RegionService(RegionRepository regionRepository, AddressService addressService) {
@@ -53,6 +53,11 @@ public class RegionService extends AbstractService<Region, String> {
         Address address = event.getSource().getAddress();
         if (address != null && address.getId() == null) {
             addressService.save(event.getSource().getAddress());
+        } else if (address.getId() != null) {
+            Address address1 = addressService.find(address.getId());
+            if (address1 != null && !address1.equals(address)) {
+                addressService.update(address);
+            }
         }
     }
 }
