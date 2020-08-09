@@ -1,8 +1,8 @@
 package com.rhema.communis.mission.domain.family;
 
+import com.rhema.communis.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import com.rhema.communis.domain.BaseEntity;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
