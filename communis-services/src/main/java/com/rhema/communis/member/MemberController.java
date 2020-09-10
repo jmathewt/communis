@@ -83,4 +83,10 @@ public class MemberController {
         return new ResponseEntity<CommunisResponse>(
                 new CommunisResponse(memberService.addMemberToAFamily(family, id)), HttpStatus.OK);
     }
+
+    @PostMapping("/find")
+    public ResponseEntity<CommunisResponse> findMember(@RequestBody Member member){
+        return new ResponseEntity<CommunisResponse>(
+                new CommunisResponse(memberService.findMember(member)), HttpStatus.OK);
+    }
 }
