@@ -18,24 +18,12 @@ public class AddressService extends AbstractService<Address, String> {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public UnaryOperator<Set<Address>> checkAndCreateNonExistentAddresses(){
-        return newAddresses -> {
-            if(CollectionUtils.isEmpty(newAddresses)){
-                return Collections.emptySet();
+    public Set<Address> createOrUpdateAddresses(Set<Address> addresses) {
+        return addresses.stream().map(address -> {
+            if(StringUtils.isEmpty(address.getId())){
+                return this.save(address);
             }
-            Set<Address> nonExistingAddresses = newAddresses.stream()
-                    .filter(address -> StringUtils.isEmpty(address.getId()))
-                    .collect(Collectors.toSet());
-            Set<Address> createdAddresses = CollectionUtils.isNotEmpty(nonExistingAddresses) ?
-                    createAddresses(nonExistingAddresses) : Collections.emptySet();
-            return createdAddresses;
-        };
-    }
-
-    public Set<Address> createAddresses(Set<Address> addresses) {
-        return addresses
-                .stream()
-                .map(this::save)
-                .collect(Collectors.toSet());
+            return this.update(address);
+        }).collect(Collectors.toSet());
     }
 }

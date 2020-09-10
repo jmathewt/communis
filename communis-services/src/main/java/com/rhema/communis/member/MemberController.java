@@ -57,8 +57,9 @@ public class MemberController {
                 return new ResponseEntity<>(BAD_REQUEST);
             }
             person.setId(id);
+            memberService.updateMember(person);
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(
-                    memberService.updateMember(person)), HttpStatus.OK);
+                    find(id)), HttpStatus.OK);
         }catch(IllegalArgumentException e){
             return new ResponseEntity<CommunisResponse>(new CommunisResponse(
                     new CommunisError(e.getMessage())), HttpStatus.NOT_FOUND);
@@ -74,13 +75,6 @@ public class MemberController {
         }
         return new ResponseEntity<CommunisResponse>(new CommunisResponse(retrievedPerson),
                 HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}/address")
-    public ResponseEntity<CommunisResponse> createAddress(@PathVariable String id,
-                                                          @RequestBody Collection<Address> address){
-        return new ResponseEntity<CommunisResponse>(
-                new CommunisResponse(memberService.createAddress(address, id)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/family")
