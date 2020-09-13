@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
 
 @Service
 public class MemberService extends AbstractService<Member, String> {
@@ -49,11 +48,8 @@ public class MemberService extends AbstractService<Member, String> {
                 throw new IllegalArgumentException("There is more than one primary contact information!");
             }
         }
-        if(CollectionUtils.isNotEmpty(person.getAddress())){
-            Set<Address> addressToBeCreated = person.getAddress().stream()
-                    .filter(address -> StringUtils.isEmpty(address.getId()))
-                    .collect(Collectors.toSet());
-            person.getAddress().addAll(addressService.createAddresses(addressToBeCreated));
+        if (CollectionUtils.isNotEmpty(person.getAddress())) {
+            person.getAddress().addAll(addressService.createOrUpdateAddresses(person.getAddress()));
         }
         Family family = person.getFamily();
         person.setFamily(null);
@@ -61,21 +57,28 @@ public class MemberService extends AbstractService<Member, String> {
         if(family != null && family.getMembers() != null && family.getMembers().size()>1){
             throw new IllegalArgumentException("Family members should only include one entry");
         }else if(family != null && CollectionUtils.isNotEmpty(family.getMembers())){
-            createOrUpdateFamilyForMember().accept(family, person);
+            createOrUpdateFamily().accept(family, person);
             person = save(person);
         }
         return person;
     }
 
-    public Member updateMember(Member person) {
+    @Transactional
+    public void updateMember(Member person) {
+        Family familyToUpdate = person.getFamily();
+        Set<Address> addressToUpdate = person.getAddress();
         Member existingPerson = this.find(person.getId());
         if(existingPerson == null){
             throw new IllegalArgumentException("Person - " + person.getId() + " not found");
         }
-        fillExistingMemberProperties().accept(person, existingPerson);
         BeanUtils.copyProperties(person, existingPerson);
+        if(familyToUpdate != null){
+            addMemberToAFamily(familyToUpdate, person.getId());
+        }
+        if(CollectionUtils.isNotEmpty(addressToUpdate)){
+            createOrUpdateAddress(addressToUpdate, person.getId());
+        }
         this.update(existingPerson);
-        return this.find(person.getId());
     }
 
     private BiConsumer<Member, Member> fillExistingMemberProperties(){
@@ -86,37 +89,34 @@ public class MemberService extends AbstractService<Member, String> {
     }
 
     @Transactional
-    public Member createAddress(Collection<Address> newAddresses, String personId){
+    public Member createOrUpdateAddress(Collection<Address> addresses, String personId){
         Member existingPerson = this.find(personId);
         if(existingPerson == null){
             throw new IllegalArgumentException("Unable to find person with id - " + personId);
         }
+        existingPerson.setAddress(addressService.createOrUpdateAddresses(new HashSet<>(addresses)));
         Set<Address> existingAddress = CollectionUtils.isEmpty(existingPerson.getAddress()) ?
                 new HashSet<>() : existingPerson.getAddress();
         existingPerson.setAddress(existingAddress);
-        if(CollectionUtils.isNotEmpty(newAddresses)){
-            existingPerson.getAddress()
-                    .addAll(addressService.checkAndCreateNonExistentAddresses()
-                    .apply(new HashSet<>(newAddresses)));
-        }
+
         return this.update(existingPerson);
     }
 
-    @Transactional
     public Member addMemberToAFamily(Family family, String personId){
         Member existingMember = this.find(personId);
-        createOrUpdateFamilyForMember().accept(family, existingMember);
+        createOrUpdateFamily().accept(family, existingMember);
         return this.update(existingMember);
     }
 
-    private BiConsumer<Family, Member> createOrUpdateFamilyForMember(){
+    private BiConsumer<Family, Member> createOrUpdateFamily(){
         return (family, person) -> {
             FamilyMember familyMember = family.getMembers().iterator().next();
             familyMember.setPersonId(person.getId());
             if(StringUtils.isEmpty(family.getId())){
                 person.setFamily(familyService.createFamily(family));
             }else{
-                person.setFamily(familyService.addFamilyMember(family, person.getId()));
+                familyService.update(family);
+                person.setFamily(familyService.addOrUpdateFamilyMember(family, person.getId()));
             }
         };
     }
