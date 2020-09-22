@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 @Service
@@ -27,14 +25,14 @@ public class MemberService extends AbstractService<Member, String> {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final MongoRepository<Member, String> personRepository;
+    private final MemberRepository memberRepository;
     private final AddressService addressService;
     private final FamilyService familyService;
 
     @Autowired
     public MemberService(MongoRepository<Member, String> personRepository,
-                         AddressService addressService, FamilyService familyService){
-        this.personRepository = personRepository;
+                         MemberRepository memberRepository, AddressService addressService, FamilyService familyService){
+        this.memberRepository = memberRepository;
         this.addressService = addressService;
         this.familyService = familyService;
     }
@@ -81,13 +79,6 @@ public class MemberService extends AbstractService<Member, String> {
         this.update(existingPerson);
     }
 
-    private BiConsumer<Member, Member> fillExistingMemberProperties(){
-        return (updateMember, existingMember) -> {
-            updateMember.setFamily(existingMember.getFamily());
-            updateMember.setAddress(existingMember.getAddress());
-        };
-    }
-
     @Transactional
     public Member createOrUpdateAddress(Collection<Address> addresses, String personId){
         Member existingPerson = this.find(personId);
@@ -119,6 +110,60 @@ public class MemberService extends AbstractService<Member, String> {
                 person.setFamily(familyService.addOrUpdateFamilyMember(family, person.getId()));
             }
         };
+    }
+
+    public Collection<Member> findMember(String searchString) {
+        Set<Member> results = new LinkedHashSet<>();
+        Map<String, Member> members = new LinkedHashMap<>();
+        if (!StringUtils.isEmpty(searchString)) {
+            String[] partsToSearch = searchString.split(" ");
+            if (partsToSearch.length == 3) {
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseAndMiddleNameIgnoreCaseAndLastNameIgnoreCase(
+                        partsToSearch[0].trim(), partsToSearch[1].trim(),
+                        partsToSearch[2].trim()));
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseStartsWithAndMiddleNameIgnoreCaseStartsWithAndLastNameIgnoreCaseStartsWith(
+                                partsToSearch[0].trim(), partsToSearch[1].trim(),
+                                partsToSearch[2].trim()));
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                                partsToSearch[0].trim(), partsToSearch[2].trim()));
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseOrMiddleNameIgnoreCaseOrLastNameIgnoreCase(
+                                partsToSearch[0].trim(), partsToSearch[1].trim(),
+                                partsToSearch[2].trim()));
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseStartsWithAndLastNameIgnoreCaseStartsWith(
+                                partsToSearch[0].trim(), partsToSearch[1].trim(), partsToSearch[2].trim()));
+            }else if(partsToSearch.length == 2){
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseAndLastNameIgnoreCase(
+                                partsToSearch[0].trim(), partsToSearch[1].trim()));
+
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseStartsWithAndLastNameIgnoreCaseStartsWith(
+                                partsToSearch[0].trim(), partsToSearch[1].trim()));
+
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseOrLastNameIgnoreCase(
+                                partsToSearch[0].trim(), partsToSearch[1].trim()));
+            }else{
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCase(partsToSearch[0].trim()));
+
+                results.addAll(memberRepository
+                        .findByMiddleNameIgnoreCaseOrLastNameIgnoreCase(partsToSearch[0].trim(), partsToSearch[0].trim()));
+
+                results.addAll(memberRepository
+                        .findByFirstNameIgnoreCaseStartsWithOrMiddleNameIgnoreCaseStartsWithOrLastNameIgnoreCaseStartsWith(
+                                partsToSearch[0].trim(), partsToSearch[0].trim(), partsToSearch[0].trim()));
+
+
+            }
+        }
+        results.forEach(result -> members.put(result.getId(), result));
+        return members.values();
     }
 
 }
